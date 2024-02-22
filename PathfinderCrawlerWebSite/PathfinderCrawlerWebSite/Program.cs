@@ -1,7 +1,13 @@
+using PathfinderCrawlerWebSite.Service.Implement;
+using PathfinderCrawlerWebSite.Service.IService;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// 1. Dependency Injection
+builder.Services.AddScoped<ICrawlerService, CrawlerService>();
 
 var app = builder.Build();
 
