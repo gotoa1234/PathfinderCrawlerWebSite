@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using Avro;
@@ -83,43 +84,39 @@ namespace PathfinderCrawlerWebSite.Service.IService
         private void GeneratorMD5VersionAvroFile()
         {
             string versionFileName = $@"{nameof(Version)}.avro";
-            // MD5實例
-            using (MD5 md5 = MD5.Create())
+
+            // 整数转字节
+            var input = _version;
+            byte[] inputBytes = BitConverter.GetBytes(input);
+
+            #region .avro 產出
+
+            // 讀取來源 .avsc 定義檔
+            var schemaJson = File.ReadAllText($@".\Avro\{nameof(Version)}.avsc");
+            var schema = (FixedSchema)Avro.Schema.Parse(schemaJson);
+
+            using (var memoryStream = new MemoryStream())
             {
-                #region MD5 
-                // 整數轉字節
-                var input = _version;
-                byte[] inputBytes = BitConverter.GetBytes(input);                          
-                #endregion
+                // 產生.avro 內容                    
+                var newItem = new GenericFixed(schema);
+                newItem.Value = inputBytes;
 
-                #region .avro 產出
+                // 写入内存中
+                var writer = new BinaryEncoder(memoryStream);
+                var avroWriter = new GenericDatumWriter<GenericFixed>(schema);
+                avroWriter.Write(newItem, writer);
 
-                // 讀取來源 .avsc 定義檔
-                var schemaJson = File.ReadAllText($@".\Avro\{nameof(Version)}.avsc");
-                var schema = (FixedSchema)Avro.Schema.Parse(schemaJson);
-
-                using (var memoryStream = new MemoryStream())
+                // 存成文件
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                var filePath = Path.Combine("wwwroot/", versionFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    // 產生.avro 內容                    
-                    var newItem = new GenericFixed(schema);
-                    newItem.Value = inputBytes;
-
-                    // 寫入記憶體中
-                    var writer = new BinaryEncoder(memoryStream);
-                    var avroWriter = new GenericDatumWriter<GenericFixed>(schema);
-                    avroWriter.Write(newItem, writer);
-
-                    // 存成檔案
-                    memoryStream.Seek(0, SeekOrigin.Begin);
-                    var filePath = Path.Combine("wwwroot/", versionFileName);
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        memoryStream.CopyTo(fileStream);
-                    }
+                    memoryStream.CopyTo(fileStream);
                 }
-
-                #endregion
             }
+
+            #endregion
+
         }
     }
 }
