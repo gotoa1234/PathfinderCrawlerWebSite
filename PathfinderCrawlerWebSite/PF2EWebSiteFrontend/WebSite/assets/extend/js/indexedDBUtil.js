@@ -1,3 +1,19 @@
+//初始化
+async function indexedDBUtilInitinalize()
+{
+    debugger;
+    checkIndexedDB().then(function (result) {
+        if (result.versionChanged || result.empty) {
+            //需要更新
+            console.log('working');
+            fetchDataAndStoreInIndexedDB();
+        }
+    })
+    .catch(function (error) {
+            console.error("Error checking IndexedDB:", error);
+    });;
+}
+
 //設定檔
 async function getFunctionProperties() {
 
@@ -25,19 +41,12 @@ async function getFunctionProperties() {
             });
         }
 
-    }
-
-    var obj = new innerFunction(); 
-    return obj;
+    }    
+    return  innerFunction();
 }
-
-
 
 async function checkIndexedDB() {
     var config = getFunctionProperties();
-    //var fileVersion = await getVersionFile();
-    //var dbName = 'pathfinderShareNote-database';
-    //var stroeName = 'magicStore';    
 
     return new Promise(function (resolve, reject) {
         var request = indexedDB.open(config.dbName);
@@ -80,88 +89,35 @@ async function checkIndexedDB() {
     });
 }
 
-async function checkIndexedDBData() {
-    var config = getFunctionProperties();
-    //var version = await getVersionFile();
-    //var dbName = 'pathfinderShareNote-database';
-    //var stroeName = 'magicStore';
-    var request = indexedDB.open(config.dbName, 1);
-      
-    //#region 出錯事件
-    request.onerror = function(event) {
-      console.error( dbName + 'Database error:', event.target.error);
-    };
-    //#endregion 
-    
-    //#region 資料庫重建事件，資料庫版本不一致時
-    request.onupgradeneeded = function(event) {
-        var db = event.target.result;
-        // 1. 檢查是否存在舊的 IndexedDB
-        if (db.objectStoreNames.contains(config.stroeName)) {
-            //進行刪除
-            db.deleteObjectStore(config.stroeName);
-        }
-
-        // 2. 創建物件儲存空間，並且指定路徑        
-        var objectStore = db.createObjectStore(config.stroeName, { keyPath: 'id' });
-        // TODO: 讀取 .avro 建立基本資料表
-        objectStore.createIndex('data', 'data', { unique: false });
-    };
-    //#endregion    
-
-    //#region 成功事件
-    request.onsuccess = function(event) {
-        var db = event.target.result;
-
-        // 交易事件
-        var transaction = db.transaction([config.stroeName], 'readonly');
-        transaction.onerror = function(event) {
-            console.error('Transaction error:', event.target.error);
-        };
-    
-        transaction.oncomplete = function(event) {
-            console.log('Transaction completed');
+async function fetchDataAndStoreInIndexedDB() {
+    var config = await getFunctionProperties();
+    return new Promise(function (resolve, reject) {
+        
+        var request = indexedDB.open(config.dbName);
+        // 1. 無法開啟返回錯誤
+        request.onerror = function (event) {
+            reject("Error opening fetchDataAndStoreInIndexedDB(): " + event.target.errorCode);
         };
 
-        AddData(db);
+        // 2. 成功開啟進行檢查
+        request.onsuccess = function (event) {
+            var db = event.target.result;
 
-        var objectStore = transaction.objectStore(config.stroeName);
-        var getRequest = objectStore.get(1);
+            var transaction = db.transaction([config.stroeName], 'readwrite');        
+            var objectStore = transaction.objectStore(config.stroeName);
     
-        getRequest.onerror = function(event) {
-          console.error('Get data error:', event.target.error);
+            // 删除之前存储的数据（如果需要）
+            var clearRequest = objectStore.clear();
+            clearRequest.onsuccess = function() {
+                var data = { id: 3, name: 'John', type: 'fire', chracter: 'focus', action: '2' };
+                objectStore.add(data);
+
+                // 事务完成后关闭数据库
+                transaction.oncomplete = function() {
+                    db.close();
+                    console.log('Data stored in IndexedDB');
+                };
+            };       
         };
-    
-        getRequest.onsuccess = function(event) {
-          var data = event.target.result;
-    
-          if (!data) {
-            console.log('Data not found in IndexedDB, reloading page...');          
-          } else {
-            console.log('Data retrieved from IndexedDB:', data);
-          }
-        };
-    };
-    //#endregion
-
-
-    //// 增加資料功能
-    function AddData(db)
-    {
-        //var transaction = db.transaction([stroeName], 'readwrite');        
-        //var objectStore = transaction.objectStore(stroeName);
-
-        //var data = { id: 2, name: 'John', type: 'fire', chracter: 'focus', action: '2' };
-        //var request = objectStore.add(data);
-
-        //// 数据添加失败
-        //request.onerror = function(event) {
-        //  console.error('Add data error:', event.target.error);
-        //};
-      
-        //// 数据添加成功
-        //request.onsuccess = function(event) {
-        //  console.log('Data added to IndexedDB');
-        //};
-    }
+    });
 }

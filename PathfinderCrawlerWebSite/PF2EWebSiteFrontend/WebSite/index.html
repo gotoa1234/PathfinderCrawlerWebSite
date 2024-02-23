@@ -362,19 +362,6 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="https://cdn.jsdelivr.net/npm/avro-web@1.0.3/avro.min.js"></script>
         <!-- Extend Script-->
 		    <script src="assets/extend/js/indexedDBUtil.js"></script>
-		    <script>
-			debugger;	
-                checkIndexedDB().then(function (result) {
-					if (result.versionChanged || result.empty) {
-						//需要更新
-						console.log('working');
-                        //fetchDataAndStoreInIndexedDB();
-                    }
-                })
-                    .catch(function (error) {
-                        console.error("Error checking IndexedDB:", error);
-                    });;
-		    </script>
-
+		    <script>indexedDBUtilInitinalize();</script>
 	</body>
 </html>
