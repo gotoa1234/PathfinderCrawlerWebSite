@@ -17,7 +17,6 @@ namespace PathfinderCrawlerWebSite.Controllers
 
         public IActionResult Index()
         {
-            _crawlerService.GeneratorAvroFile();
             return View();
         }
     }
