@@ -1,4 +1,4 @@
-﻿namespace PathfinderCrawlerWebSite.Service.Implement
+﻿namespace PathfinderCrawlerWebSite.IService
 {
     public interface IGenerateAvroFileService
     {

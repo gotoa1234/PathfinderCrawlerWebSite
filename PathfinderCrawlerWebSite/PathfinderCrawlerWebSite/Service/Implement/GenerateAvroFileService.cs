@@ -1,9 +1,9 @@
 ﻿using Avro;
 using Avro.Generic;
 using Avro.IO;
-using PathfinderCrawlerWebSite.Service.Implement;
+using PathfinderCrawlerWebSite.IService;
 
-namespace PathfinderCrawlerWebSite.Service.IService
+namespace PathfinderCrawlerWebSite.Service.Implement
 {
     public class GenerateAvroFileService : IGenerateAvroFileService
     {

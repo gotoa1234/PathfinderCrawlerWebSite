@@ -1,4 +1,4 @@
-﻿namespace PathfinderCrawlerWebSite.Service.Implement.Magic
+﻿namespace PathfinderCrawlerWebSite.IService.Magic.Root
 {
     public interface IMagicRoots
     {
