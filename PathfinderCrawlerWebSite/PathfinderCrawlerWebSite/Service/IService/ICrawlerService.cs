@@ -2,6 +2,6 @@
 {
     public interface ICrawlerService
     {
-        public void HttpGetMyWrok();
+        public Task<string> HttpGetMyWrok(string targetUrl);
     }
 }

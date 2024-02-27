@@ -1,6 +1,9 @@
-﻿namespace PathfinderCrawlerWebSite.IService.Magic
+﻿using PathfinderCrawlerWebSite.IService.Magic.Root;
+
+namespace PathfinderCrawlerWebSite.IService.Magic
 {
-    public interface IArcaneSpellsService 
+    public interface IArcaneSpellsService : IMagicRoots
     {
+
     }
 }

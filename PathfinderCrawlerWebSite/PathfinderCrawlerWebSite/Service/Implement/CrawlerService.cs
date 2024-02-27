@@ -5,7 +5,7 @@ namespace PathfinderCrawlerWebSite.Service.Implement
     public class CrawlerService : ICrawlerService
     {
 
-        public async void HttpGetMyWrok() 
+        public async Task<string> HttpGetMyWrok(string targetUrl) 
         {
             //     項目 /html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div[1] 
             //          /html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div[2] ... 到 div[x] 
@@ -27,20 +27,15 @@ namespace PathfinderCrawlerWebSite.Service.Implement
             var httpClient = httpClientFactory.CreateClient();
 
             // 發出 GET 請求
-            var response = await httpClient.GetAsync($@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_185.html");
+            var response = await httpClient.GetAsync(targetUrl);
 
-            // 檢查請求是否成功
+            // 檢查請求是否成功            
             if (response.IsSuccessStatusCode)
             {
                 // 讀取回應的內容
-                var content = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(content);
+                return await response.Content.ReadAsStringAsync();                
             }
-            else
-            {
-                Console.WriteLine($"Request failed with status code {response.StatusCode}");
-            }
-
+            return "";
         }
 
     }
