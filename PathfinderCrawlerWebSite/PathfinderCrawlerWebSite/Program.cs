@@ -1,5 +1,5 @@
+using PathfinderCrawlerWebSite.IService;
 using PathfinderCrawlerWebSite.Service.Implement;
-using PathfinderCrawlerWebSite.Service.IService;
 
 var builder = WebApplication.CreateBuilder(args);
 

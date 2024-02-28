@@ -1,16 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using System.Security.Cryptography;
-using System.Text;
-using Avro;
+﻿using Avro;
 using Avro.Generic;
 using Avro.IO;
-using PathfinderCrawlerWebSite.Service.Implement;
+using PathfinderCrawlerWebSite.IService;
 
-namespace PathfinderCrawlerWebSite.Service.IService
+namespace PathfinderCrawlerWebSite.Service.Implement
 {
-    public class CrawlerService : ICrawlerService
+    public class GenerateAvroFileService : IGenerateAvroFileService
     {
         private readonly int _version = 1;
 
@@ -25,7 +20,7 @@ namespace PathfinderCrawlerWebSite.Service.IService
             // 创建 Avro 序列化器
             var schema = (RecordSchema)Avro.Schema.Parse(schemaJson);
             // Create a memory stream to write Avro data
-          
+
             using (var memoryStream = new MemoryStream())
             {
                 // Create a GenericRecord instance

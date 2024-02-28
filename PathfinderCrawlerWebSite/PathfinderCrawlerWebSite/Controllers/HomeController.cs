@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PathfinderCrawlerWebSite.Service.Implement;
+using PathfinderCrawlerWebSite.IService;
 
 namespace PathfinderCrawlerWebSite.Controllers
 {
@@ -17,7 +17,7 @@ namespace PathfinderCrawlerWebSite.Controllers
 
         public IActionResult Index()
         {
-            _crawlerService.GeneratorAvroFile();
+             _crawlerService.HttpGetMyWrok();
             return View();
         }
     }
