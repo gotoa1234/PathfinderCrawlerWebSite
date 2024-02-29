@@ -1,5 +1,7 @@
 using PathfinderCrawlerWebSite.IService;
+using PathfinderCrawlerWebSite.IService.Magic;
 using PathfinderCrawlerWebSite.Service.Implement;
+using PathfinderCrawlerWebSite.Service.Implement.Magic;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,10 @@ builder.Services.AddControllersWithViews();
 
 // 1. Dependency Injection
 builder.Services.AddScoped<ICrawlerService, CrawlerService>();
+builder.Services.AddScoped<IArcaneSpellsService, ArcaneSpellsService>();
+builder.Services.AddScoped<IDivineSpellsService, DivineSpellsService>();
+builder.Services.AddScoped<IOccultSpellsService, OccultSpellsService>();
+builder.Services.AddScoped<IPrimalSpellsService, PrimalSpellsService>();
 
 var app = builder.Build();
 

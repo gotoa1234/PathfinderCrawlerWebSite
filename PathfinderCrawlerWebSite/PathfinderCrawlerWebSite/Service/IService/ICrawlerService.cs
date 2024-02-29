@@ -1,7 +1,9 @@
-﻿namespace PathfinderCrawlerWebSite.IService
+﻿using HtmlAgilityPack;
+
+namespace PathfinderCrawlerWebSite.IService
 {
     public interface ICrawlerService
     {
-        public Task<string> HttpGetMyWrok(string targetUrl);
+        HtmlDocument HttpGetMyWrok(string targetUrl);
     }
 }

@@ -1,23 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PathfinderCrawlerWebSite.IService;
+using PathfinderCrawlerWebSite.IService.Magic;
 
 namespace PathfinderCrawlerWebSite.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ICrawlerService _crawlerService;
+        private readonly IArcaneSpellsService _arcaneSpellsService;
 
         public HomeController(ILogger<HomeController> logger,
-            ICrawlerService crawlerService)
+            IArcaneSpellsService arcaneSpellsService)
         {
             _logger = logger;
-            _crawlerService = crawlerService;
+            _arcaneSpellsService = arcaneSpellsService;
         }
 
         public IActionResult Index()
         {
-             _crawlerService.HttpGetMyWrok();
+            _arcaneSpellsService.Trick();
             return View();
         }
     }
