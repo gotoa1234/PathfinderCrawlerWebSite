@@ -1,17 +1,19 @@
-﻿namespace PathfinderCrawlerWebSite.IService.Magic.Root
+﻿using PathfinderCrawlerWebSite.Models.Magic;
+
+namespace PathfinderCrawlerWebSite.IService.Magic.Root
 {
     public interface IMagicRoots
     {
-        void Trick();
-        void LevelFirstSpell();
-        void LevelSecondSpell();
-        void LevelThirdSpell();
-        void LevelFourthSpell();
-        void LevelFifthSpell();
-        void LevelSixthSpell();
-        void LevelSeventhSpell();
-        void LevelEighthSpell();
-        void LevelNighthSpell();
-        void LevelTenthSpell();
+        List<SpellModel> Trick();
+        List<SpellModel> LevelFirstSpell();
+        List<SpellModel> LevelSecondSpell();
+        List<SpellModel> LevelThirdSpell();
+        List<SpellModel> LevelFourthSpell();
+        List<SpellModel> LevelFifthSpell();
+        List<SpellModel> LevelSixthSpell();
+        List<SpellModel> LevelSeventhSpell();
+        List<SpellModel> LevelEighthSpell();
+        List<SpellModel> LevelNighthSpell();
+        List<SpellModel> LevelTenthSpell();
     }
 }

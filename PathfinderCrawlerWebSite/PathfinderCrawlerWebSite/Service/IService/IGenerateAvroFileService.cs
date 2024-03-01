@@ -1,7 +1,9 @@
-﻿namespace PathfinderCrawlerWebSite.IService
+﻿using PathfinderCrawlerWebSite.Models.Magic;
+
+namespace PathfinderCrawlerWebSite.IService
 {
     public interface IGenerateAvroFileService
     {
-        void GeneratorAvroFile();
+        void GeneratorSpellModelAvroFile(List<SpellModel> datas);
     }
 }

@@ -1,0 +1,83 @@
+﻿{
+  "type": "record",
+  "name": "SpellModel",
+  "fields": [
+    {
+      "name": "SpellClass",
+      "type": "string"
+    },
+    {
+      "name": "SpellLevel",
+      "type": "string"
+    },
+    {
+      "name": "SourceDataUrl",
+      "type": "string"
+    },
+    {
+      "name": "Name",
+      "type": "string"
+    },
+    {
+      "name": "Level",
+      "type": "int"
+    },
+    {
+      "name": "Feature",
+      "type": {
+        "type": "array",
+        "items": "string"
+      }
+    },
+    {
+      "name": "Source",
+      "type": {
+        "type": "array",
+        "items": "string"
+      }
+    },
+    {
+      "name": "Posture",
+      "type": {
+        "type": "array",
+        "items": "string"
+      }
+    },
+    {
+      "name": "Range",
+      "type": {
+        "type": "array",
+        "items": "string"
+      }
+    },
+    {
+      "name": "SavingThrows",
+      "type": {
+        "type": "array",
+        "items": "string"
+      }
+    },
+    {
+      "name": "Ambit",
+      "type": {
+        "type": "array",
+        "items": "string"
+      }
+    },
+    {
+      "name": "Duration",
+      "type": {
+        "type": "array",
+        "items": "string"
+      }
+    },
+    {
+      "name": "Explain",
+      "type": "string"
+    },
+    {
+      "name": "SpellBoots",
+      "type": "string"
+    }
+  ]
+}

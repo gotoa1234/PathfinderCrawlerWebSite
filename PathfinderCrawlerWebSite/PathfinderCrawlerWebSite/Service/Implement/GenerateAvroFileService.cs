@@ -2,6 +2,7 @@
 using Avro.Generic;
 using Avro.IO;
 using PathfinderCrawlerWebSite.IService;
+using PathfinderCrawlerWebSite.Models.Magic;
 
 namespace PathfinderCrawlerWebSite.Service.Implement
 {
@@ -14,62 +15,53 @@ namespace PathfinderCrawlerWebSite.Service.Implement
         /// </summary>
         public void GeneratorAvroFile()
         {
-            // 创建 Avro Schema
-            var schemaJson = File.ReadAllText(@".\Avro\User.avsc");
+            // 產生版本號
+            GeneratorMD5VersionAvroFile();
+        }
 
-            // 创建 Avro 序列化器
+        /// <summary>
+        /// 產生法術資料檔案(奧術、神術、異能、原能)
+        /// </summary>
+        public void GeneratorSpellModelAvroFile(List<SpellModel> datas)
+        {
+            var schemaJson = File.ReadAllText($@".\Avro\{nameof(SpellModel)}.avsc");
+            var filePath = Path.Combine("wwwroot/", $@"{nameof(SpellModel)}.avro");
+
+            // Avro 序列化
             var schema = (RecordSchema)Avro.Schema.Parse(schemaJson);
-            // Create a memory stream to write Avro data
-
             using (var memoryStream = new MemoryStream())
-            {
-                // Create a GenericRecord instance
-                var person = new GenericRecord(schema);
-                person.Add("Name", "John Doe");
-                person.Add("Id", 1);
-                //person["Name"] = "John Doe";
-                //person["Age"] = 30;
-
-                // Serialize the GenericRecord instance to the memory stream                
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {                        
                 var writer = new BinaryEncoder(memoryStream);
                 var avroWriter = new GenericDatumWriter<GenericRecord>(schema);
-                avroWriter.Write(person, writer);
+
+                foreach (var item in datas)
+                {
+                    var insertData = new GenericRecord(schema);
+                    insertData.Add(nameof(item.SpellClass), item.SpellClass);
+                    insertData.Add(nameof(item.SpellLevel), item.SpellLevel);
+                    insertData.Add(nameof(item.SourceDataUrl), item.SourceDataUrl);
+                    insertData.Add(nameof(item.Name), item.Name);
+                    insertData.Add(nameof(item.Level), item.Level);
+                    insertData.Add(nameof(item.Feature), item.Feature);
+                    insertData.Add(nameof(item.Source), item.Source);
+                    insertData.Add(nameof(item.Posture), item.Posture);
+                    insertData.Add(nameof(item.Range), item.Range);
+                    insertData.Add(nameof(item.SavingThrows), item.SavingThrows);
+                    insertData.Add(nameof(item.Ambit), item.Ambit);
+                    insertData.Add(nameof(item.Duration), item.Duration);
+                    insertData.Add(nameof(item.Explain), item.Explain);
+                    insertData.Add(nameof(item.SpellBoots), item.SpellBoots);
+                    avroWriter.Write(insertData, writer);
+                    writer.Flush();
+                }
 
                 // Save the memory stream to a file
                 memoryStream.Seek(0, SeekOrigin.Begin);
-                var filePath = Path.Combine("wwwroot/", "test.avro");
-                //var filePath = Path.Combine(Path.GetTempPath(), "person.avro");
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    memoryStream.CopyTo(fileStream);
-                }
-
-                //var filePath = Path.Combine("wwwroot/", DateTime.Now.ToString("yyyyMMDDHHmmss") + ".avro");
-                //using (var stream = new FileStream(filePath, FileMode.Create))
-                //{
-                //    file.CopyToAsync(stream);
-                //}
-
-                //return File(System.IO.File.ReadAllBytes(filePath), "application/avro", "person.avro");
+                              
+                // 輸出成文件
+                memoryStream.CopyTo(fileStream);
             }
-
-            //var serializer = new AvroSerializer<User>();
-
-            //// 创建 User 实例
-            //var user = new User { Id = 1, Name = "John" };
-
-            //// 序列化 User 实例
-            //using (var ms = new MemoryStream())
-            //{
-            //    serializer.Serialize(ms, user);
-            //    ms.Seek(0, SeekOrigin.Begin);
-
-            //    // 返回 Avro 文件
-            //    return File(ms, "application/octet-stream", "user.avro");
-            //}
-
-            // 產生版本號
-            GeneratorMD5VersionAvroFile();
         }
 
         /// <summary>

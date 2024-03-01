@@ -1,106 +1,174 @@
-﻿using HtmlAgilityPack;
+﻿using PathfinderCrawlerWebSite.Common;
 using PathfinderCrawlerWebSite.IService;
 using PathfinderCrawlerWebSite.IService.Magic;
 using PathfinderCrawlerWebSite.Models.Magic;
+using PathfinderCrawlerWebSite.Service.IService.Magic;
 
 namespace PathfinderCrawlerWebSite.Service.Implement.Magic
 {
     public class ArcaneSpellsService : IArcaneSpellsService
     {
         private ICrawlerService _crawlerService;
+        private ISpellsBaseService _spellsBaseService;
 
-        public ArcaneSpellsService(ICrawlerService crawlerService)
+        public ArcaneSpellsService(ICrawlerService crawlerService,
+             ISpellsBaseService spellsBaseService)
         {
             _crawlerService = crawlerService;
+            _spellsBaseService = spellsBaseService;
         }
 
         /// <summary>
         /// 戲法
         /// </summary>        
-        public void Trick()
+        public List<SpellModel> Trick()
         {
-            var pathUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_185.html";
-            var doc = _crawlerService.HttpGetMyWrok(pathUrl);
-            // Create XPathDocument
-            try
-            {
-                // XPath 
-                HtmlNodeCollection allSpells = doc.DocumentNode.SelectNodes("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div");
-                var results = new List<SpellModel>();
-                foreach (var spell in allSpells) 
-                {
-                    try
-                    {
-                        var myData = new SpellModel(spell);
-                        results.Add(myData);
-                    }
-                    catch { 
-                        //捨棄無法轉換的資料
-                    }
-                }                
-            }
-            catch (Exception ex)
-            {
+            //Base Data
+            var className = SpellClassEnum.Arcane;
+            var level = SpellLevelEnum.Trick; 
+            var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_185.html";
+            var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
+            //Get Pharse Result
+            var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
+                doc, className, level, sourceDataUrl);
+            return results;
+        }
 
-            }
-            throw new NotImplementedException();
+        public List<SpellModel> LevelFirstSpell()
+        {
+            //Base Data
+            var className = SpellClassEnum.Arcane;
+            var level = SpellLevelEnum.LevelFirstSpell;
+            var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_186.html";
+            var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
+            //Get Pharse Result
+            var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
+                doc, className, level, sourceDataUrl);
+            return results;
+        }
+
+        public List<SpellModel> LevelSecondSpell()
+        {
+            //Base Data
+            var className = SpellClassEnum.Arcane;
+            var level = SpellLevelEnum.LevelSecondSpell;
+            var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_187.html";
+            var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
+            //Get Pharse Result
+            var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
+                doc, className, level, sourceDataUrl);
+            return results;
+        }
+
+        public List<SpellModel> LevelThirdSpell()
+        {
+            //Base Data
+            var className = SpellClassEnum.Arcane;
+            var level = SpellLevelEnum.LevelThirdSpell;
+            var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_188.html";
+            var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
+            //Get Pharse Result
+            var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
+                doc, className, level, sourceDataUrl);
+            return results;
+        }
+
+        public List<SpellModel> LevelFourthSpell()
+        {
+            //Base Data
+            var className = SpellClassEnum.Arcane;
+            var level = SpellLevelEnum.LevelFourthSpell;
+            var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_189.html";
+            var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
+            //Get Pharse Result
+            var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
+                doc, className, level, sourceDataUrl);
+            return results;
+        }
+
+        public List<SpellModel> LevelFifthSpell()
+        {
+            //Base Data
+            var className = SpellClassEnum.Arcane;
+            var level = SpellLevelEnum.LevelFifthSpell;
+            var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_190.html";
+            var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
+            //Get Pharse Result
+            var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
+                doc, className, level, sourceDataUrl);
+            return results;
+        }
+
+        public List<SpellModel> LevelSixthSpell()
+        {
+            //Base Data
+            var className = SpellClassEnum.Arcane;
+            var level = SpellLevelEnum.LevelSixthSpell;
+            var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_191.html";
+            var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
+            //Get Pharse Result
+            var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
+                doc, className, level, sourceDataUrl);
+            return results;
+        }
+
+        public List<SpellModel> LevelSeventhSpell()
+        {
+            //Base Data
+            var className = SpellClassEnum.Arcane;
+            var level = SpellLevelEnum.LevelSeventhSpell;
+            var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_192.html";
+            var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
+            //Get Pharse Result
+            var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
+                doc, className, level, sourceDataUrl);
+            return results;
         }
 
         /// <summary>
-        /// 一環法術
+        /// 八環法術
         /// </summary>        
-        public void LevelEighthSpell()
+        public List<SpellModel> LevelEighthSpell()
         {
-            var pathUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_186.html";
-            _crawlerService.HttpGetMyWrok(pathUrl);
-            
-            throw new NotImplementedException();
+            //Base Data
+            var className = SpellClassEnum.Arcane;
+            var level = SpellLevelEnum.LevelEighthSpell;
+            var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_193.html";
+            var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
+            //Get Pharse Result
+            var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
+                doc, className, level, sourceDataUrl);
+            return results;
         }
 
-        public void LevelFifthSpell()
+
+        public List<SpellModel> LevelNighthSpell()
         {
-            throw new NotImplementedException();
+            //Base Data
+            var className = SpellClassEnum.Arcane;
+            var level = SpellLevelEnum.LevelNighthSpell;
+            var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_194.html";
+            var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
+            //Get Pharse Result
+            var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
+                doc, className, level, sourceDataUrl);
+            return results;
         }
 
-        public void LevelFirstSpell()
+        public List<SpellModel> LevelTenthSpell()
         {
-            throw new NotImplementedException();
+            //Base Data
+            var className = SpellClassEnum.Arcane;
+            var level = SpellLevelEnum.LevelTenthSpell;
+            var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_195.html";
+            var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
+            //Get Pharse Result
+            var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
+                doc, className, level, sourceDataUrl);
+            return results;
         }
 
-        public void LevelFourthSpell()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LevelNighthSpell()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LevelSecondSpell()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LevelSeventhSpell()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LevelSixthSpell()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LevelTenthSpell()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LevelThirdSpell()
-        {
-            throw new NotImplementedException();
-        }
+        
 
 
     }

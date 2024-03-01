@@ -1,28 +1,39 @@
 ﻿using HtmlAgilityPack;
 using PathfinderCrawlerWebSite.Common;
 using System.ComponentModel;
-using System.Text;
 
 namespace PathfinderCrawlerWebSite.Models.Magic
 {
     public class SpellModel
     {
         /// <summary>
-        /// 標題
+        /// 種類 Arcane / Divine / Occult / Primal
         /// </summary>
-        public string SpellTitle { get; set; } = string.Empty;
+        public string SpellClass { get; set;}
+
+        /// <summary>
+        /// 階級
+        /// </summary>
+        public string SpellLevel { get; set; } = string.Empty;
 
         /// <summary>
         /// 資料來源 URL
         /// </summary>
         public string SourceDataUrl { get; set; } = string.Empty;
 
-        [Description("//div[1]/span[1]")]
+        /// <summary>
+        /// 名稱
+        /// </summary>
         public string Name { get; set; } = string.Empty;
 
-        [Description("//div[1]/span[2]")]
+        /// <summary>
+        /// 等級
+        /// </summary>
         public int Level { get; set; } = 1;
 
+        /// <summary>
+        /// 特性
+        /// </summary>
         [Description("//div[2]/span")]
         public string[] Feature { get; set; } = Array.Empty<string>();
 
@@ -68,19 +79,31 @@ namespace PathfinderCrawlerWebSite.Models.Magic
         /// </summary>
         public string SpellBoots { get; set; }
 
-        public SpellModel(HtmlNode xmlNode)
+        public SpellModel(HtmlNode xmlNode, 
+            string className, 
+            string level,
+            string sourceDataUrl)
         {
-            //每個資料都應該有自己的處理方式
+            // 每個資料都應該有自己的處理方式
+            this.SpellClass = className;
+            this.SpellLevel= level;
+            this.SourceDataUrl = sourceDataUrl;
             this.Name = GetName();
-            this.Level = GetLevel();
-            this.Feature = GetFeature();
-            SetUseMethod();
-            this.Explain = GetExplain();
-            this.SpellBoots = GetSpellBoots();
+            // 檢核資料是否正確格式，如果正確 Name 應有值
+            if (!string.IsNullOrEmpty(this.Name))
+            {
+                this.Level = GetLevel();
+                this.Feature = GetFeature();
+                SetUseMethod();
+                this.Explain = GetExplain();
+                this.SpellBoots = GetSpellBoots();
+            }
 
             string GetName(string path = "./div[1]/span[1]")
             {                
-                return xmlNode.SelectSingleNode(path).InnerText;                
+                return xmlNode.SelectSingleNode(path) == null 
+                    ? String.Empty 
+                    : xmlNode.SelectSingleNode(path).InnerText;                
             }
 
             int GetLevel(string path = "./div[1]/span[2]")
