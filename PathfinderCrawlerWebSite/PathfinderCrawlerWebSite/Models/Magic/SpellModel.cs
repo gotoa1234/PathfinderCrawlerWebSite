@@ -7,6 +7,11 @@ namespace PathfinderCrawlerWebSite.Models.Magic
     public class SpellModel
     {
         /// <summary>
+        /// 序號
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// 種類 Arcane / Divine / Occult / Primal
         /// </summary>
         public string SpellClass { get; set;}
@@ -98,6 +103,8 @@ namespace PathfinderCrawlerWebSite.Models.Magic
                 this.Explain = GetExplain();
                 this.SpellBoots = GetSpellBoots();
             }
+            this.Id = GlobalVariable._SequenceId++;
+
 
             string GetName(string path = "./div[1]/span[1]")
             {                

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PathfinderCrawlerWebSite.Common;
 using PathfinderCrawlerWebSite.IService;
 using PathfinderCrawlerWebSite.IService.Magic;
 using PathfinderCrawlerWebSite.Models.Magic;
@@ -10,6 +11,7 @@ namespace PathfinderCrawlerWebSite.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IArcaneSpellsService _arcaneSpellsService;
         private readonly IGenerateAvroFileService _generateAvroFileService;
+
 
         public HomeController(ILogger<HomeController> logger,
             IArcaneSpellsService arcaneSpellsService,
@@ -25,30 +27,20 @@ namespace PathfinderCrawlerWebSite.Controllers
             var collections = new List<SpellModel>();
             try
             {
+                GlobalVariable._SequenceId = 1;
                 var temp = _arcaneSpellsService.Trick();
                 collections.AddRange(temp);
                 _generateAvroFileService.GeneratorSpellModelAvroFile(collections);
-
-                //temp = _arcaneSpellsService.LevelFirstSpell();
-                //collections.AddRange(temp);
-                //temp = _arcaneSpellsService.LevelSecondSpell();
-                //collections.AddRange(temp);
-                //temp = _arcaneSpellsService.LevelThirdSpell();
-                //collections.AddRange(temp);
-                //temp = _arcaneSpellsService.LevelFourthSpell();
-                //collections.AddRange(temp);
-                //temp = _arcaneSpellsService.LevelFifthSpell();
-                //collections.AddRange(temp);
-                //temp = _arcaneSpellsService.LevelSixthSpell();
-                //collections.AddRange(temp);
-                //temp = _arcaneSpellsService.LevelSeventhSpell();
-                //collections.AddRange(temp);
-                //temp = _arcaneSpellsService.LevelEighthSpell();
-                //collections.AddRange(temp);
-                //temp = _arcaneSpellsService.LevelNighthSpell();
-                //collections.AddRange(temp);
-                //temp = _arcaneSpellsService.LevelTenthSpell();
-                //collections.AddRange(temp);
+                //collections.AddRange(_arcaneSpellsService.LevelFirstSpell());
+                //collections.AddRange(_arcaneSpellsService.LevelSecondSpell());                
+                //collections.AddRange(_arcaneSpellsService.LevelThirdSpell());                
+                //collections.AddRange(_arcaneSpellsService.LevelFourthSpell());                
+                //collections.AddRange(_arcaneSpellsService.LevelFifthSpell());                
+                //collections.AddRange(_arcaneSpellsService.LevelSixthSpell());                
+                //collections.AddRange(_arcaneSpellsService.LevelSeventhSpell());                
+                //collections.AddRange(_arcaneSpellsService.LevelEighthSpell());                
+                //collections.AddRange(_arcaneSpellsService.LevelNighthSpell());                
+                //collections.AddRange(_arcaneSpellsService.LevelTenthSpell());
             }
             catch (Exception ex)
             { 

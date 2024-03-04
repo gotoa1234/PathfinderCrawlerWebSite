@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="WebSite\assets\extend\Jsonfile\" />
+  </ItemGroup>
+
 </Project>
