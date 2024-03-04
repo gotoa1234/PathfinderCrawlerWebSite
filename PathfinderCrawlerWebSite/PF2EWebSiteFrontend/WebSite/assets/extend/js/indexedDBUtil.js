@@ -126,7 +126,7 @@ async function fetchDataAndStoreInIndexedDB() {
             }
 
             // 更新數據庫結構
-            var objectStore = db.createObjectStore(config.storeName, { keyPath: 'Id' });
+            var objectStore = db.createObjectStore(config.storeName, { autoIncrement: true });
             objectStore.createIndex('SpellClass', 'SpellClass', { unique: false });
             objectStore.createIndex('SpellLevel', 'SpellLevel', { unique: false });
             objectStore.createIndex('SourceDataUrl', 'SourceDataUrl', { unique: false });
@@ -143,23 +143,22 @@ async function fetchDataAndStoreInIndexedDB() {
             objectStore.createIndex('SpellBoots', 'SpellBoots', { unique: false });
         };
 
-        // 2. 成功開啟進行檢查
+        // 2-1. 成功開啟進行檢查
         request.onsuccess = function (event) {
             var db = event.target.result;
 
-            var transaction = db.transaction([config.storeName], 'readwrite');
-            var objectStore = transaction.objectStore(config.storeName);
-    
-            // 删除之前存储的数据（如果需要）
-            var clearRequest = objectStore.clear();
+            // 當數據庫已經存在時，立即插入數據
+            if (db.objectStoreNames.contains([config.storeName])) {
+                var transaction = db.transaction([config.storeName], 'readwrite');
+                var objectStore = transaction.objectStore(config.storeName);
 
-            // 成功時將資料寫進 IndexedDB 資料庫
-            clearRequest.onsuccess = function () {
-                debugger;
+                // 3-1. 删除之前存储的数据
+                var clearRequest = objectStore.clear();
+
+                // 3-2. 新增資料
                 for (let index = 0; index < spellModelJson.length; index++) {
                     var item = spellModelJson[index];
-                    var newItem = {
-                        id: item.id,
+                    var newItem = {                        
                         SpellClass: item.SpellClass,
                         SpellLevel: item.SpellLevel,
                         SourceDataUrl: item.SourceDataUrl,
@@ -173,19 +172,29 @@ async function fetchDataAndStoreInIndexedDB() {
                         Duration: item.Duration,
                         Explain: item.Explain,
                         SpellBoots: item.SpellBoots
-                    };
-                    objectStore.add(newItem);
+                    };                    
+                    objectStore.add(newItem);                    
                 }
 
-                //var data = { id: 3, name: 'John', type: 'fire', chracter: 'focus', action: '2' };
-                //objectStore.add(data);
-
-                // 事务完成后关闭数据库
-                transaction.oncomplete = function() {
-                    db.close();
-                    console.log('Data stored in IndexedDB');
+                // 3-3. 刪除資料內容時的訊息
+                clearRequest.onsuccess = function () {
+                    console.info("Clear Database Successful.");
                 };
-            };       
+
+                // 3-4. 刪除資料內容失敗時的訊息
+                clearRequest.onerror = function (event) {
+                    console.error('Clear Database error:', event.target.errorCode);
+                };
+            }
+           
+
+
+        };
+
+
+        // 2-2. 失敗紀錄訊息
+        request.onerror = function (event) {
+            console.error('Database error:', event.target.errorCode);
         };
     });
 }
