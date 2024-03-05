@@ -2,6 +2,7 @@ using PathfinderCrawlerWebSite.IService;
 using PathfinderCrawlerWebSite.IService.Magic;
 using PathfinderCrawlerWebSite.Service.Implement;
 using PathfinderCrawlerWebSite.Service.Implement.Magic;
+using PathfinderCrawlerWebSite.Service.IService;
 using PathfinderCrawlerWebSite.Service.IService.Magic;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,8 +16,10 @@ builder.Services.AddScoped<IArcaneSpellsService, ArcaneSpellsService>();
 builder.Services.AddScoped<IDivineSpellsService, DivineSpellsService>();
 builder.Services.AddScoped<IOccultSpellsService, OccultSpellsService>();
 builder.Services.AddScoped<IPrimalSpellsService, PrimalSpellsService>();
-builder.Services.AddScoped<IGenerateAvroFileService, GenerateAvroFileService>();
+builder.Services.AddScoped<IGenerateFileService, GenerateFileService>();
 builder.Services.AddScoped<ISpellsBaseService, SpellsBaseService>();
+builder.Services.AddScoped<IFacadeMaigcService, FacadeMaigcService>();
+
 
 var app = builder.Build();
 

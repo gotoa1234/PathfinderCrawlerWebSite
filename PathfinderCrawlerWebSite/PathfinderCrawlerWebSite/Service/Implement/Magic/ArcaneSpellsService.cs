@@ -34,6 +34,9 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
             return results;
         }
 
+        /// <summary>
+        /// 一環法術
+        /// </summary>        
         public List<SpellModel> LevelFirstSpell()
         {
             //Base Data
@@ -47,6 +50,9 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
             return results;
         }
 
+        /// <summary>
+        /// 二環法術
+        /// </summary>        
         public List<SpellModel> LevelSecondSpell()
         {
             //Base Data
@@ -60,6 +66,9 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
             return results;
         }
 
+        /// <summary>
+        /// 三環法術
+        /// </summary>        
         public List<SpellModel> LevelThirdSpell()
         {
             //Base Data
@@ -73,6 +82,9 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
             return results;
         }
 
+        /// <summary>
+        /// 四環法術
+        /// </summary>        
         public List<SpellModel> LevelFourthSpell()
         {
             //Base Data
@@ -86,6 +98,9 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
             return results;
         }
 
+        /// <summary>
+        /// 五環法術
+        /// </summary>        
         public List<SpellModel> LevelFifthSpell()
         {
             //Base Data
@@ -99,6 +114,9 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
             return results;
         }
 
+        /// <summary>
+        /// 六環法術
+        /// </summary>        
         public List<SpellModel> LevelSixthSpell()
         {
             //Base Data
@@ -112,6 +130,9 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
             return results;
         }
 
+        /// <summary>
+        /// 七環法術
+        /// </summary>        
         public List<SpellModel> LevelSeventhSpell()
         {
             //Base Data
@@ -141,7 +162,9 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
             return results;
         }
 
-
+        /// <summary>
+        /// 九環法術
+        /// </summary>        
         public List<SpellModel> LevelNighthSpell()
         {
             //Base Data
@@ -155,6 +178,9 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
             return results;
         }
 
+        /// <summary>
+        /// 十環法術
+        /// </summary>        
         public List<SpellModel> LevelTenthSpell()
         {
             //Base Data
@@ -167,9 +193,6 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
                 doc, className, level, sourceDataUrl);
             return results;
         }
-
-        
-
 
     }
 }

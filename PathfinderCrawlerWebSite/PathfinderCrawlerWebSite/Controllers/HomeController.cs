@@ -8,18 +8,14 @@ namespace PathfinderCrawlerWebSite.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IArcaneSpellsService _arcaneSpellsService;
-        private readonly IGenerateAvroFileService _generateAvroFileService;
+        private readonly ILogger<HomeController> _logger;        
+        private readonly IGenerateFileService _generateFileService;       
 
-
-        public HomeController(ILogger<HomeController> logger,
-            IArcaneSpellsService arcaneSpellsService,
-            IGenerateAvroFileService generateAvroFileService)
+        public HomeController(ILogger<HomeController> logger,            
+            IGenerateFileService generateAvroFileService)
         {
-            _logger = logger;
-            _arcaneSpellsService = arcaneSpellsService;
-            _generateAvroFileService = generateAvroFileService;
+            _logger = logger;            
+            _generateFileService = generateAvroFileService;
         }
 
         public IActionResult Index()
@@ -28,19 +24,7 @@ namespace PathfinderCrawlerWebSite.Controllers
             try
             {
                 GlobalVariable._SequenceId = 1;
-                var temp = _arcaneSpellsService.Trick();
-                collections.AddRange(temp);
-                _generateAvroFileService.GeneratorSpellModelAvroFile(collections);
-                //collections.AddRange(_arcaneSpellsService.LevelFirstSpell());
-                //collections.AddRange(_arcaneSpellsService.LevelSecondSpell());                
-                //collections.AddRange(_arcaneSpellsService.LevelThirdSpell());                
-                //collections.AddRange(_arcaneSpellsService.LevelFourthSpell());                
-                //collections.AddRange(_arcaneSpellsService.LevelFifthSpell());                
-                //collections.AddRange(_arcaneSpellsService.LevelSixthSpell());                
-                //collections.AddRange(_arcaneSpellsService.LevelSeventhSpell());                
-                //collections.AddRange(_arcaneSpellsService.LevelEighthSpell());                
-                //collections.AddRange(_arcaneSpellsService.LevelNighthSpell());                
-                //collections.AddRange(_arcaneSpellsService.LevelTenthSpell());
+                _generateFileService.GeneratorFile();                
             }
             catch (Exception ex)
             { 
