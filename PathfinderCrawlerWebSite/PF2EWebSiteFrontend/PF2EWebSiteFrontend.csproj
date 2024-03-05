@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="WebSite\assets\extend\Jsonfile\" />
+    <Folder Include="WebSite\assets\extend\jsonfile\" />
   </ItemGroup>
 
 </Project>

@@ -22,8 +22,8 @@ namespace PathfinderCrawlerWebSite.Service.Implement
         /// </summary>
         public void GeneratorFile()
         {
-            //var getSpellModelJson = _facadeMaigcService.IntergrationWorking();
-            //GeneratorSpellModelFile(getSpellModelJson);
+            var getSpellModelJson = _facadeMaigcService.IntergrationWorking();
+            GeneratorSpellModelFile(getSpellModelJson);
 
             // 最後一定要生成版本號
             GeneratorIndexedDBVersionFile();
