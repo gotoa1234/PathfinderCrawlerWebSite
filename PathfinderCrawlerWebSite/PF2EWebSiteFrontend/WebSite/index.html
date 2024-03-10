@@ -41,6 +41,7 @@
 						<li><a href="#work">神術 Divine</a></li>
 						<li><a href="#about">異能 Occult</a></li>
 						<li><a href="#contact">原能 Primal</a></li>
+						<li><a href="#search">搜尋頁</a></li>
 						<!--<li><a href="#elements">Elements</a></li>-->
 					</ul>
 				</nav>
@@ -51,10 +52,85 @@
 
 				<!-- Intro -->
 				<article id="intro">
-					<h2 class="major">Intro</h2>
-					<span class="image main"><img src="images/pic01.jpg" alt="" /></span>
-					<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. By the way, check out my <a href="#work">awesome work</a>.</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
+					<section>
+						<h6 class="icon solid fa-hourglass-start">奧術-戲法</h6>
+						<ul class="actions">
+							<li><a href="#" class="button icon solid fas fa-chevron-left"></a></li>
+							<li>
+								<select name="demo-category" id="demo-category">
+									<option value="0">=============== 奧術-戲法 ===============</option>
+									<option value="1" selected>酸液飛濺 ACID SPLASH</option>
+									<option value="2">恐嚇之觸 Chill Touch</option>
+									<option value="3">舞光術 Dancing Lights</option>
+								</select>
+							</li>
+							<li><a href="#" class="button icon solid fas fa-chevron-right"></a></li>
+						</ul>
+					</section>
+					<hr>
+					<section>
+						<h1 style="white-space: pre-wrap">酸液飛濺 Acid Splash</h1>
+					</section>
+					<hr>
+					<section>
+						<div class="fields">
+							<div class="field">
+								<h2>環級：戲法</h2>
+							</div>
+							<div class="field">
+								<ul>
+									<li>酸液, 攻擊, 戲法, 塑能系</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+					<!-- 特性 -->
+					<section>
+						<div class="table-wrapper">
+							<table class="alt">
+								<tbody>
+									<tr>
+										<td>根源：</td>
+										<td>奧術，原能</td>
+									</tr>
+									<tr>
+										<td>施放</td>
+										<td>姿勢，語言</td>
+									</tr>
+									<tr>
+										<td>射程</td>
+										<td>30尺；目標1個生物</td>
+									</tr>
+									<tr>
+										<td>豁免</td>
+										<td>強韌</td>
+									</tr>
+									<tr>
+										<td>持續時間</td>
+										<td>維持</td>
+									</tr>
+									<tr>
+										<td>區域</td>
+										<td>30尺瀰漫</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</section>
+					<!-- 說明 -->
+					<section>
+						<h4>技能說明：</h4>
+						<blockquote>
+							<div class=\"description\">你發射一團酸液，潑濺到生物或者物體上。嘗試一次法術攻擊。如果你命中，你造成1d6強酸傷害和1濺射強酸傷害。在重擊時，目標會承受1持續強酸傷害。</div>
+						</blockquote>
+					</section>
+					<!-- 增強 -->
+					<section>
+						<h4>升階說明：</h4>
+						<blockquote>
+							<div class=\"description\"><b>升階（3環）</b> 初始傷害增加到1d6+你的施法屬性調整值、並且持續傷害增加到2。\n<br><b>升階（5環）</b> 初始傷害增加到2d6+你的施法屬性調整值、持續傷害增加到3、並且濺射傷害增加到2。 <br><b>升階（7環）</b>\n初始傷害增加到3d6+你的施法屬性調整值、持續傷害增加到4、並且濺射傷害增加到3。 <br><b>升階（9環）</b>\n初始傷害增加到4d6+你的施法屬性調整值、持續傷害增加到5、並且濺射傷害增加到4。 </div>
+						</blockquote>
+					</section>
 				</article>
 
 				<!-- Work -->
@@ -101,6 +177,56 @@
 						<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
 						<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
 					</ul>
+				</article>
+
+				<!-- Search -->
+				<article id="search">
+					<h2 class="major">搜尋頁</h2>					
+					<form method="post" action="#">
+						<div class="fields">
+							<div class="field">
+								<label for="search-keyword">法術名稱關鍵字搜尋</label>
+								<input type="text" name="search-keyword" id="search-keyword" value="" placeholder="輸入關鍵字..." />
+							</div>
+							<div class="field">
+								<label for="spelllevel-category">法術等級</label>
+								<select name="spelllevel-category" id="spelllevel-category">
+									<option value="0" selected>戲法</option>
+									<option value="1">一環法術</option>
+									<option value="2">二環法術</option>
+									<option value="3">三環法術</option>
+									<option value="4">四環法術</option>
+									<option value="5">五環法術</option>
+									<option value="6">六環法術</option>
+									<option value="7">七環法術</option>
+									<option value="8">八環法術</option>
+									<option value="9">九環法術</option>
+									<option value="10">十環法術</option>
+								</select>
+							</div>
+							<div class="field quarter">
+								<input type="radio" id="spellclass-arcane" name="spellclass" checked>
+								<label for="spellclass-arcane">奧術</label>
+							</div>
+							<div class="field quarter">
+								<input type="radio" id="spellclass-divine" name="spellclass">
+								<label for="spellclass-divine">神術</label>
+							</div>
+							<div class="field quarter">
+								<input type="radio" id="spellclass-occult" name="spellclass">
+								<label for="spellclass-occult">異能</label>
+							</div>
+							<div class="field quarter">
+								<input type="radio" id="spellclass-primal" name="spellclass">
+								<label for="spellclass-primal">原能</label>
+							</div>
+
+						</div>
+						<ul class="actions">
+							<li><input type="submit" value="查詢" class="primary" /></li>
+							<li><input type="reset" value="Reset" /></li>
+						</ul>
+					</form>
 				</article>
 
 				<!-- Elements -->
@@ -366,7 +492,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 		<script src="assets/js/browser.min.js"></script>
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
-		<script src="assets/js/main.js"></script>		
+		<script src="assets/js/main.js"></script>
 		<!-- avro-web CDN -->
 		<script src="https://cdn.jsdelivr.net/npm/avro-web@1.0.3/avro.min.js"></script>
 		<!-- Extend Script-->
