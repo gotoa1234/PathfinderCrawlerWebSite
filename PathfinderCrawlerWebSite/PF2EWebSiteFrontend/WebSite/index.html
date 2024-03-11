@@ -36,11 +36,11 @@
 					</div>
 				</div>
 				<nav>
-					<ul>
-						<li><a href="#intro">奧術 Arcane</a></li>
-						<li><a href="#work">神術 Divine</a></li>
-						<li><a href="#about">異能 Occult</a></li>
-						<li><a href="#contact">原能 Primal</a></li>
+					<ul id="links-list">
+						<li><a href="#intro" value="spellclass-arcane">奧術 Arcane</a></li>
+						<li><a href="#work" value="spellclass-divine">神術 Divine</a></li>
+						<li><a href="#about" value="spellclass-occult">異能 Occult</a></li>
+						<li><a href="#contact" value="spellclass-primal">原能 Primal</a></li>
 						<li><a href="#search">搜尋頁</a></li>
 						<!--<li><a href="#elements">Elements</a></li>-->
 					</ul>
@@ -181,8 +181,8 @@
 
 				<!-- Search -->
 				<article id="search">
-					<h2 class="major">搜尋頁</h2>					
-					<form method="post" action="#">
+					<h2 class="major">搜尋頁</h2>
+					<form id="search-form">
 						<div class="fields">
 							<div class="field">
 								<label for="search-keyword">法術名稱關鍵字搜尋</label>
@@ -501,5 +501,52 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 		<script>
 			indexedDBUtilInitinalize();
 		</script>
+
+		<!-- 錨點 -->
+		<script>
+			//TODO: 移除，這是搜尋頁測試
+			document.addEventListener('DOMContentLoaded', function () {
+				// 获取表单元素
+                var form = document.getElementById('search-form');
+
+				// 监听表单提交事件
+				form.addEventListener('submit', function (event) {
+					// 阻止默认的表单提交行为
+					event.preventDefault();
+
+					// 获取跳转目标的锚点
+					var targetAnchor = '#work'; // 你的锚点
+
+					// 执行跳转
+					window.location.href = window.location.pathname + targetAnchor;
+				});
+			});
+
+			// 這是跳轉攜帶參數測試
+			document.addEventListener('DOMContentLoaded', function () {
+                var ulElement = document.getElementById('links-list');
+                // 获取所有的链接元素
+                var links = ulElement.querySelectorAll('li a');
+
+                // 遍历每个链接元素
+                links.forEach(function (link) {
+                    // 监听链接的点击事件
+                    link.addEventListener('click', function (event) {
+                        // 阻止默认的链接跳转行为
+                        event.preventDefault();
+
+                        // 获取搜尋頁，預設的四種 Value 的值
+                        var targetSpellValue = this.getAttribute('value');
+                        var defaultRadioButton = document.getElementById(targetSpellValue);
+                        defaultRadioButton.checked = true;
+
+                        // 将参数值传递到搜索页面，并在当前页面的锚点位置跳转
+                        window.location.href = window.location.pathname + '#search';
+                    });
+				});
+            });
+		</script>
+
+
 	</body>
 </html>
