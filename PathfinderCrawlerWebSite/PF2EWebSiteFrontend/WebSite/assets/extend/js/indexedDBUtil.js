@@ -143,20 +143,21 @@ async function fetchDataAndStoreInIndexedDB() {
 
                     // 更新數據庫結構
                     var objectStore = db.createObjectStore(config.storeName, { autoIncrement: true });
-                    objectStore.createIndex('SpellClass', 'SpellClass', { unique: false });
-                    objectStore.createIndex('SpellLevel', 'SpellLevel', { unique: false });
-                    objectStore.createIndex('SourceDataUrl', 'SourceDataUrl', { unique: false });
-                    objectStore.createIndex('Name', 'Name', { unique: false });
-                    objectStore.createIndex('Level', 'Level', { unique: false });
-                    objectStore.createIndex('Feature', 'Feature', { unique: false, multiEntry: true });
-                    objectStore.createIndex('Source', 'Source', { unique: false, multiEntry: true });
-                    objectStore.createIndex('Posture', 'Posture', { unique: false, multiEntry: true });
-                    objectStore.createIndex('Range', 'Range', { unique: false, multiEntry: true });
-                    objectStore.createIndex('SavingThrows', 'SavingThrows', { unique: false, multiEntry: true });
-                    objectStore.createIndex('Ambit', 'Ambit', { unique: false, multiEntry: true });
-                    objectStore.createIndex('Duration', 'Duration', { unique: false, multiEntry: true });
-                    objectStore.createIndex('Explain', 'Explain', { unique: false });
-                    objectStore.createIndex('SpellBoots', 'SpellBoots', { unique: false });
+                    //objectStore.createIndex('SpellClass', 'SpellClass', { unique: false });
+                    //objectStore.createIndex('SpellLevel', 'SpellLevel', { unique: false });
+                    //objectStore.createIndex('SourceDataUrl', 'SourceDataUrl', { unique: false });
+                    //objectStore.createIndex('Name', 'Name', { unique: false });
+                    //objectStore.createIndex('Level', 'Level', { unique: false });
+                    //objectStore.createIndex('Feature', 'Feature', { unique: false, multiEntry: true });
+                    //objectStore.createIndex('Source', 'Source', { unique: false, multiEntry: true });
+                    //objectStore.createIndex('Posture', 'Posture', { unique: false, multiEntry: true });
+                    //objectStore.createIndex('Range', 'Range', { unique: false, multiEntry: true });
+                    //objectStore.createIndex('SavingThrows', 'SavingThrows', { unique: false, multiEntry: true });
+                    //objectStore.createIndex('Ambit', 'Ambit', { unique: false, multiEntry: true });
+                    //objectStore.createIndex('Duration', 'Duration', { unique: false, multiEntry: true });
+                    //objectStore.createIndex('Explain', 'Explain', { unique: false });
+                    //objectStore.createIndex('SpellBoots', 'SpellBoots', { unique: false });
+                    objectStore.createIndex('Name_Level_SpellClass', ["Name", "Level", "SpellClass"], { unique: false });
                 };
 
                 request.onsuccess = function (event) {
@@ -209,6 +210,57 @@ async function fetchDataAndStoreInIndexedDB() {
                 request.onerror = function (event) {
                     console.error('Database error:', event.target.errorCode);
                     reject("Error fetching data and storing in IndexedDB");
+                };
+            })
+            .catch(function (error) {
+                console.error("Error fetching data and storing in IndexedDB:", error);
+                reject("Error fetching data and storing in IndexedDB");
+            });
+    });
+}
+
+//實現查詢IndexedDB 內的索引資料 TODO: 尚未完整，只是範例
+async function getDbData() {
+    var config = await getFunctionProperties();
+
+    return new Promise(function (resolve, reject) {
+        var config;
+
+        // 首先，執行所有非同步操作並等待它們完成
+        Promise.all([getFunctionProperties()])
+            .then(function (results) {
+                config = results[0];                
+
+                var request = indexedDB.open(config.dbName, config.fileVersion);
+
+                request.onerror = function (event) {
+                    reject("Error opening getDbData(): " + event.target.errorCode);
+                };
+
+                request.onsuccess = function (event) {
+                    var db = event.target.result;
+                    // 開始交易
+                    var transaction = db.transaction([config.storeName], 'readwrite');
+                    var objectStore = transaction.objectStore(config.storeName);
+                    debugger;
+                    // 查詢資料（使用索引）
+                    var index = objectStore.index("Name_Level_SpellClass");
+                    var request2 = index.openCursor();
+
+                    request2.onsuccess = function (event) {
+                        var cursor = event.target.result;
+                        if (cursor) {
+                            var value = cursor.value;
+                            if (value.Level === 1 && value.SpellClass === "神術" && value.Name.includes("測")) {
+                                console.log("Found:", value);
+                            }
+                            cursor.continue();
+                        } else {
+                            console.log("No more entries!");
+                        }
+                    };
+                    // 所有操作完成後，解析 Promise
+                    resolve("fetchDataAndStoreInIndexedDB completed successfully");
                 };
             })
             .catch(function (error) {
