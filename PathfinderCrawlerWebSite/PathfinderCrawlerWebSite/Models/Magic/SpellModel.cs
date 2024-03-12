@@ -17,10 +17,20 @@ namespace PathfinderCrawlerWebSite.Models.Magic
         public string SpellClass { get; set;}
 
         /// <summary>
+        /// 種類中文
+        /// </summary>
+        public string SpellClassName { get; set; }
+
+        /// <summary>
         /// 階級
         /// </summary>
         public string SpellLevel { get; set; } = string.Empty;
 
+        /// <summary>
+        /// 階級中文名稱
+        /// </summary>
+        public string SpellLevelName { get; set; }
+        
         /// <summary>
         /// 資料來源 URL
         /// </summary>
@@ -85,13 +95,17 @@ namespace PathfinderCrawlerWebSite.Models.Magic
         public string SpellBoots { get; set; }
 
         public SpellModel(HtmlNode xmlNode, 
-            string className, 
+            string className,
+            string classChineseName,
             string level,
+            string levelName,
             string sourceDataUrl)
         {
             // 每個資料都應該有自己的處理方式
             this.SpellClass = className;
+            this.SpellClassName= classChineseName;
             this.SpellLevel= level;
+            this.SpellLevelName = levelName;
             this.SourceDataUrl = sourceDataUrl;
             this.Name = GetName();
             // 檢核資料是否正確格式，如果正確 Name 應有值
@@ -191,5 +205,28 @@ namespace PathfinderCrawlerWebSite.Models.Magic
                 return xmlNode.SelectSingleNode(path)?.OuterHtml ?? String.Empty;
             }
         }
+    }
+
+    public class IndexedDBSpellModel
+    {
+        /// <summary>
+        /// HtmlId
+        /// </summary>
+        public string HtmlId { get; set; } = String.Empty;
+
+        /// <summary>
+        /// 種類 Arcane / Divine / Occult / Primal
+        /// </summary>
+        public string SpellClass { get; set; } = String.Empty;
+
+        /// <summary>
+        /// 階級
+        /// </summary>
+        public string SpellLevel { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 名稱
+        /// </summary>
+        public string Name { get; set; } = string.Empty;
     }
 }

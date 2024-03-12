@@ -2,6 +2,6 @@
 {
     public interface IFacadeBaseService
     {
-        string IntergrationWorking();
+        (string htmlString, string indexedDBJson) IntergrationWorking();
     }
 }

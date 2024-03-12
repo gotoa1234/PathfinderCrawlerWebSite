@@ -157,7 +157,8 @@ async function fetchDataAndStoreInIndexedDB() {
                     //objectStore.createIndex('Duration', 'Duration', { unique: false, multiEntry: true });
                     //objectStore.createIndex('Explain', 'Explain', { unique: false });
                     //objectStore.createIndex('SpellBoots', 'SpellBoots', { unique: false });
-                    objectStore.createIndex('Name_Level_SpellClass', ["Name", "Level", "SpellClass"], { unique: false });
+                    objectStore.createIndex('Name_SpellLevel_SpellClass', ["Name", "SpellLevel", "SpellClass"], { unique: false });
+                    objectStore.createIndex('SpellLevel_SpellClass', ["SpellLevel", "SpellClass"], { unique: false });
                 };
 
                 request.onsuccess = function (event) {
@@ -175,19 +176,9 @@ async function fetchDataAndStoreInIndexedDB() {
                             var item = spellModelJson[index];
                             var newItem = {
                                 SpellClass: item.SpellClass,
-                                SpellLevel: item.SpellLevel,
-                                SourceDataUrl: item.SourceDataUrl,
+                                SpellLevel: item.SpellLevel,                                
                                 Name: item.Name,
-                                Level: item.Level,
-                                Feature: item.Feature,
-                                Source: item.Source,
-                                Posture: item.Posture,
-                                Range: item.Range,
-                                SavingThrows: item.SavingThrows,
-                                Ambit: item.Ambit,
-                                Duration: item.Duration,
-                                Explain: item.Explain,
-                                SpellBoots: item.SpellBoots
+                                HtmlId: item.HtmlId
                             };
                             objectStore.add(newItem);
                         }
@@ -220,7 +211,7 @@ async function fetchDataAndStoreInIndexedDB() {
 }
 
 //實現查詢IndexedDB 內的索引資料 TODO: 尚未完整，只是範例
-async function getDbData() {
+async function getDb_Name_Level_SpellClass_Data(searchSpellLevel, searchSpellClass, searchName) {
     var config = await getFunctionProperties();
 
     return new Promise(function (resolve, reject) {
@@ -244,14 +235,68 @@ async function getDbData() {
                     var objectStore = transaction.objectStore(config.storeName);
                     debugger;
                     // 查詢資料（使用索引）
-                    var index = objectStore.index("Name_Level_SpellClass");
+                    var index = objectStore.index("Name_SpellLevel_SpellClass");
                     var request2 = index.openCursor();
 
                     request2.onsuccess = function (event) {
                         var cursor = event.target.result;
                         if (cursor) {
                             var value = cursor.value;
-                            if (value.Level === 1 && value.SpellClass === "神術" && value.Name.includes("測")) {
+                            if (value.SpellLevel === searchSpellLevel &&
+                                value.SpellClass === searchSpellClass &&
+                                value.Name.includes(searchName)) {
+                                console.log("Found:", value);
+                            }
+                            cursor.continue();
+                        } else {
+                            console.log("No more entries!");
+                        }
+                    };
+                    // 所有操作完成後，解析 Promise
+                    resolve("fetchDataAndStoreInIndexedDB completed successfully");
+                };
+            })
+            .catch(function (error) {
+                console.error("Error fetching data and storing in IndexedDB:", error);
+                reject("Error fetching data and storing in IndexedDB");
+            });
+    });
+}
+
+//實現查詢IndexedDB 內的索引資料
+async function getDb_Name_Level_SpellClass_Data(searchSpellLevel, searchSpellClass) {
+    var config = await getFunctionProperties();
+
+    return new Promise(function (resolve, reject) {
+        var config;
+
+        // 首先，執行所有非同步操作並等待它們完成
+        Promise.all([getFunctionProperties()])
+            .then(function (results) {
+                config = results[0];
+
+                var request = indexedDB.open(config.dbName, config.fileVersion);
+
+                request.onerror = function (event) {
+                    reject("Error opening getDbData(): " + event.target.errorCode);
+                };
+
+                request.onsuccess = function (event) {
+                    var db = event.target.result;
+                    // 開始交易
+                    var transaction = db.transaction([config.storeName], 'readwrite');
+                    var objectStore = transaction.objectStore(config.storeName);
+                    debugger;
+                    // 查詢資料（使用索引）
+                    var index = objectStore.index("SpellLevel_SpellClass");
+                    var request2 = index.openCursor();
+
+                    request2.onsuccess = function (event) {
+                        var cursor = event.target.result;
+                        if (cursor) {
+                            var value = cursor.value;
+                            if (value.SpellLevel === searchSpellLevel &&
+                                value.SpellClass === searchSpellClass ) {
                                 console.log("Found:", value);
                             }
                             cursor.continue();

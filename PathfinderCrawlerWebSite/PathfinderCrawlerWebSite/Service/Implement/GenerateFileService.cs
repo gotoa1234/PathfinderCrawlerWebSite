@@ -22,8 +22,9 @@ namespace PathfinderCrawlerWebSite.Service.Implement
         /// </summary>
         public void GeneratorFile()
         {
-            var getSpellModelJson = _facadeMaigcService.IntergrationWorking();
-            GeneratorSpellModelFile(getSpellModelJson);
+            var getResult= _facadeMaigcService.IntergrationWorking();
+            GeneratorSpellModelFile(getResult.indexedDBJson);
+            GeneratorHtmlTemplate(getResult.htmlString);
 
             // 最後一定要生成版本號
             GeneratorIndexedDBVersionFile();
@@ -37,6 +38,17 @@ namespace PathfinderCrawlerWebSite.Service.Implement
             var frontWebFileNamePath = $@"{frontWebSaveFilePath}{nameof(SpellModel)}.json";
             var backWebFileNamePath = $@"{backWebSaveFilePath}{nameof(SpellModel)}.json";           ;
             SaveFile(frontWebFileNamePath, backWebFileNamePath, jsonString);
+        }
+
+        /// <summary>
+        /// 產生 Html 樣板
+        /// </summary>
+        /// <param name="htmlString"></param>
+        private void GeneratorHtmlTemplate(string htmlString)
+        {
+            var frontWebFileNamePath = $@"{frontWebSaveFilePath}spellHtml.json";
+            var backWebFileNamePath = $@"{backWebSaveFilePath}spellHtml.json"; ;
+            SaveFile(frontWebFileNamePath, backWebFileNamePath, htmlString);
         }
 
         /// <summary>

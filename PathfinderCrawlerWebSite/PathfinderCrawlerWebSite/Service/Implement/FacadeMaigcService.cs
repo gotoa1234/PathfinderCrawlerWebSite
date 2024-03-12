@@ -24,9 +24,10 @@ namespace PathfinderCrawlerWebSite.Service.Implement
             _primalSpellsService = primalSpellsService;
         }
 
-        public string IntergrationWorking()
+        public (string htmlString, string indexedDBJson) IntergrationWorking()
         {
             var collections = new List<SpellModel>();
+            // 1. 蒐集資料
             int milliSecond = 5 * 1000;//休息時間，避免太頻繁抓資料被視為異常
             try
             {
@@ -45,9 +46,9 @@ namespace PathfinderCrawlerWebSite.Service.Implement
                 Console.WriteLine(ex);
                 throw new Exception(ex.Message);
             }
-
-            var resultJson = JsonConvert.SerializeObject(collections);
-            return resultJson;
+            // 2. 整理資料
+            var getResult =CreateData(collections);
+            return (getResult.htmlString, getResult.indexedDBJson);
         }
 
         private List<SpellModel> ArcaneSpellCollections()
@@ -116,6 +117,114 @@ namespace PathfinderCrawlerWebSite.Service.Implement
             collections.AddRange(_primalSpellsService.LevelNighthSpell());
             collections.AddRange(_primalSpellsService.LevelTenthSpell());
             return collections;
+        }
+
+        /// <summary>
+        /// 產生資料
+        /// </summary>
+        /// <returns></returns>
+        private (string htmlString, string indexedDBJson) CreateData(List<SpellModel> collects)
+        {
+            var generateItems = new List<IndexedDBSpellModel>();
+            var htmlResult = new List<string>();
+            
+            foreach (var item in collects)
+            {                
+                var newItem = new IndexedDBSpellModel();
+                newItem.SpellLevel = item.SpellLevel;
+                newItem.SpellClass = item.SpellClass;
+                newItem.Name = item.Name;
+                newItem.HtmlId = $@"{item.SpellClass}_{item.SpellLevel}_{item.Id}";
+                generateItems.Add(newItem);
+
+                string htmlTemplate = @$"
+                <article id='{newItem.HtmlId}'>
+					<section>
+						<h6 class='icon solid fa-hourglass-start'>{item.SpellClassName}-{item.SpellLevelName}</h6>
+						<ul class='actions'>
+							<li><a href='#' class='button icon solid fas fa-chevron-left'></a></li>
+							<li>
+								<select name='spellitem-category' id='spellitem-category'>
+									<option value='0'></option>									
+								</select>
+							</li>
+							<li><a href='#' class='button icon solid fas fa-chevron-right'></a></li>
+						</ul>
+					</section>
+					<hr>
+					<section>
+						<h1 style='white-space: pre-wrap'>{item.Name}</h1>
+					</section>
+					<hr>
+					<section>
+						<div class='fields'>
+							<div class='field'>
+								<h2>環級：{item.SpellLevelName}</h2>
+							</div>
+							<div class='field'>
+								<ul>
+									<li>{string.Join("", item.Feature)}</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+					<!-- 特性 -->
+					<section>
+						<div class='table-wrapper'>
+							<table class='alt'>
+								<tbody>
+									<tr>
+										<td>根源：</td>
+										<td>{string.Join(", ", item.Source)}</td>
+									</tr>
+									<tr>
+										<td>施放</td>
+										<td>{string.Join(", ", item.Posture)}</td>
+									</tr>
+									<tr>
+										<td>射程</td>
+										<td>{string.Join(", ", item.Range)}</td>
+									</tr>
+									<tr>
+										<td>豁免</td>
+										<td>{string.Join(", ", item.SavingThrows)}</td>
+									</tr>
+									<tr>
+										<td>持續時間</td>
+										<td>{string.Join(", ", item.Duration)}</td>
+									</tr>
+									<tr>
+										<td>區域</td>
+										<td>{string.Join(", ", item.Range)}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</section>
+					<!-- 說明 -->
+					<section>
+						<h4>技能說明：</h4>
+						<blockquote>
+							{item.Explain}
+						</blockquote>
+					</section>
+					<!-- 增強 -->
+					<section>
+						<h4>升階說明：</h4>
+						<blockquote>
+							{item.SpellBoots}
+						</blockquote>
+					</section>
+                </article>
+
+
+";
+                htmlResult.Add(htmlTemplate);
+            }
+
+            var htmlFile = string.Join(Environment.NewLine, htmlResult);
+            var indexedDbJsonFile = JsonConvert.SerializeObject(generateItems);
+            return (htmlFile, indexedDbJsonFile);
         }
 
     }

@@ -10,7 +10,7 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
         /// 轉換成共用的資料
         /// </summary>                
         public List<SpellModel> GetConvertNodeCollections(string xpath, HtmlDocument doc,
-            string className, string level, string sourceDataUrl)
+            string className, string classChineseName, string level, string levelName, string sourceDataUrl)
         {
             var results = new List<SpellModel>();
             try
@@ -21,7 +21,7 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
                 {
                     try
                     {
-                        var myData = new SpellModel(spell, className, level, sourceDataUrl);
+                        var myData = new SpellModel(spell, className, classChineseName, level, levelName, sourceDataUrl);
                         if (!string.IsNullOrEmpty(myData.Name))
                         {
                             results.Add(myData);

@@ -23,14 +23,16 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
         /// </summary>        
         public List<SpellModel> Trick()
         {
-            //Base Data
-            var className = SpellClassEnum.Arcane;
-            var level = SpellLevelEnum.Trick; 
+            //Base Data            
+            var className = nameof(SpellClassEnum.Arcane);
+            var classChineseName = SpellClassEnum.Arcane;
+            var level = nameof(SpellLevelEnum.Trick);
+            var levelName = SpellLevelEnum.Trick;
             var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_185.html";
             var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
             //Get Pharse Result
             var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
-                doc, className, level, sourceDataUrl);
+                doc, className, classChineseName, level, levelName, sourceDataUrl);
             return results;
         }
 
@@ -40,13 +42,15 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
         public List<SpellModel> LevelFirstSpell()
         {
             //Base Data
-            var className = SpellClassEnum.Arcane;
-            var level = SpellLevelEnum.LevelFirstSpell;
+            var className = nameof(SpellClassEnum.Arcane);
+            var classChineseName = SpellClassEnum.Arcane;
+            var level = nameof(SpellLevelEnum.LevelFirstSpell);
+            var levelName = SpellLevelEnum.LevelFirstSpell;
             var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_186.html";
             var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
             //Get Pharse Result
             var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
-                doc, className, level, sourceDataUrl);
+                doc, className, classChineseName, level, levelName, sourceDataUrl);
             return results;
         }
 
@@ -56,13 +60,15 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
         public List<SpellModel> LevelSecondSpell()
         {
             //Base Data
-            var className = SpellClassEnum.Arcane;
-            var level = SpellLevelEnum.LevelSecondSpell;
+            var className = nameof(SpellClassEnum.Arcane);
+            var classChineseName = SpellClassEnum.Arcane;
+            var level = nameof(SpellLevelEnum.LevelSecondSpell);
+            var levelName = SpellLevelEnum.LevelSecondSpell;            
             var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_187.html";
             var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
             //Get Pharse Result
             var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
-                doc, className, level, sourceDataUrl);
+                doc, className, classChineseName, level, levelName, sourceDataUrl);
             return results;
         }
 
@@ -72,13 +78,15 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
         public List<SpellModel> LevelThirdSpell()
         {
             //Base Data
-            var className = SpellClassEnum.Arcane;
-            var level = SpellLevelEnum.LevelThirdSpell;
+            var className = nameof(SpellClassEnum.Arcane);
+            var classChineseName = SpellClassEnum.Arcane;
+            var level = nameof(SpellLevelEnum.LevelThirdSpell);
+            var levelName = SpellLevelEnum.LevelThirdSpell;            
             var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_188.html";
             var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
             //Get Pharse Result
             var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
-                doc, className, level, sourceDataUrl);
+                doc, className, classChineseName, level, levelName, sourceDataUrl);
             return results;
         }
 
@@ -88,13 +96,15 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
         public List<SpellModel> LevelFourthSpell()
         {
             //Base Data
-            var className = SpellClassEnum.Arcane;
-            var level = SpellLevelEnum.LevelFourthSpell;
+            var className = nameof(SpellClassEnum.Arcane);
+            var classChineseName = SpellClassEnum.Arcane;
+            var level = nameof(SpellLevelEnum.LevelFourthSpell);
+            var levelName = SpellLevelEnum.LevelFourthSpell;            
             var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_189.html";
             var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
             //Get Pharse Result
             var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
-                doc, className, level, sourceDataUrl);
+                doc, className, classChineseName, level, levelName, sourceDataUrl);
             return results;
         }
 
@@ -104,13 +114,15 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
         public List<SpellModel> LevelFifthSpell()
         {
             //Base Data
-            var className = SpellClassEnum.Arcane;
-            var level = SpellLevelEnum.LevelFifthSpell;
+            var className = nameof(SpellClassEnum.Arcane);
+            var classChineseName = SpellClassEnum.Arcane;
+            var level = nameof(SpellLevelEnum.LevelFifthSpell);
+            var levelName = SpellLevelEnum.LevelFifthSpell;            
             var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_190.html";
             var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
             //Get Pharse Result
             var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
-                doc, className, level, sourceDataUrl);
+                doc, className, classChineseName, level, levelName, sourceDataUrl);
             return results;
         }
 
@@ -120,13 +132,15 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
         public List<SpellModel> LevelSixthSpell()
         {
             //Base Data
-            var className = SpellClassEnum.Arcane;
-            var level = SpellLevelEnum.LevelSixthSpell;
+            var className = nameof(SpellClassEnum.Arcane);
+            var classChineseName = SpellClassEnum.Arcane;
+            var level = nameof(SpellLevelEnum.LevelSixthSpell);
+            var levelName = SpellLevelEnum.LevelSixthSpell;            
             var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_191.html";
             var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
             //Get Pharse Result
             var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
-                doc, className, level, sourceDataUrl);
+                doc, className, classChineseName, level, levelName, sourceDataUrl);
             return results;
         }
 
@@ -136,13 +150,15 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
         public List<SpellModel> LevelSeventhSpell()
         {
             //Base Data
-            var className = SpellClassEnum.Arcane;
-            var level = SpellLevelEnum.LevelSeventhSpell;
+            var className = nameof(SpellClassEnum.Arcane);
+            var classChineseName = SpellClassEnum.Arcane;
+            var level = nameof(SpellLevelEnum.LevelSeventhSpell);
+            var levelName = SpellLevelEnum.LevelSeventhSpell;            
             var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_192.html";
             var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
             //Get Pharse Result
             var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
-                doc, className, level, sourceDataUrl);
+                doc, className, classChineseName, level, levelName, sourceDataUrl);
             return results;
         }
 
@@ -152,13 +168,15 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
         public List<SpellModel> LevelEighthSpell()
         {
             //Base Data
-            var className = SpellClassEnum.Arcane;
-            var level = SpellLevelEnum.LevelEighthSpell;
+            var className = nameof(SpellClassEnum.Arcane);
+            var classChineseName = SpellClassEnum.Arcane;
+            var level = nameof(SpellLevelEnum.LevelEighthSpell);
+            var levelName = SpellLevelEnum.LevelEighthSpell;
             var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_193.html";
             var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
             //Get Pharse Result
             var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
-                doc, className, level, sourceDataUrl);
+                doc, className, classChineseName, level, levelName, sourceDataUrl);
             return results;
         }
 
@@ -168,13 +186,15 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
         public List<SpellModel> LevelNighthSpell()
         {
             //Base Data
-            var className = SpellClassEnum.Arcane;
-            var level = SpellLevelEnum.LevelNighthSpell;
+            var className = nameof(SpellClassEnum.Arcane);
+            var classChineseName = SpellClassEnum.Arcane;
+            var level = nameof(SpellLevelEnum.LevelNighthSpell);
+            var levelName = SpellLevelEnum.LevelNighthSpell;            
             var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_194.html";
             var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
             //Get Pharse Result
             var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
-                doc, className, level, sourceDataUrl);
+                doc, className, classChineseName, level, levelName, sourceDataUrl);
             return results;
         }
 
@@ -184,13 +204,15 @@ namespace PathfinderCrawlerWebSite.Service.Implement.Magic
         public List<SpellModel> LevelTenthSpell()
         {
             //Base Data
-            var className = SpellClassEnum.Arcane;
-            var level = SpellLevelEnum.LevelTenthSpell;
+            var className = nameof(SpellClassEnum.Arcane);
+            var classChineseName = SpellClassEnum.Arcane;
+            var level = nameof(SpellLevelEnum.LevelTenthSpell);
+            var levelName = SpellLevelEnum.LevelTenthSpell;            
             var sourceDataUrl = $@"https://pf2e.hktrpg.com/topics/%E5%9F%BA%E6%9C%AC/page_195.html";
             var doc = _crawlerService.HttpGetMyWrok(sourceDataUrl);
             //Get Pharse Result
             var results = _spellsBaseService.GetConvertNodeCollections("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div",
-                doc, className, level, sourceDataUrl);
+                doc, className, classChineseName, level, levelName, sourceDataUrl);
             return results;
         }
 
