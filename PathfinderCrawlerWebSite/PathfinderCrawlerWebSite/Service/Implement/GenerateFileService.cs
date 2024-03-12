@@ -46,8 +46,8 @@ namespace PathfinderCrawlerWebSite.Service.Implement
         /// <param name="htmlString"></param>
         private void GeneratorHtmlTemplate(string htmlString)
         {
-            var frontWebFileNamePath = $@"{frontWebSaveFilePath}spellHtml.json";
-            var backWebFileNamePath = $@"{backWebSaveFilePath}spellHtml.json"; ;
+            var frontWebFileNamePath = $@"{frontWebSaveFilePath}spellHtml.html";
+            var backWebFileNamePath = $@"{backWebSaveFilePath}spellHtml.html"; ;
             SaveFile(frontWebFileNamePath, backWebFileNamePath, htmlString);
         }
 

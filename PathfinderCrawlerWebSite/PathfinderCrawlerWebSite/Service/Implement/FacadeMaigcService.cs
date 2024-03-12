@@ -137,7 +137,54 @@ namespace PathfinderCrawlerWebSite.Service.Implement
                 newItem.HtmlId = $@"{item.SpellClass}_{item.SpellLevel}_{item.Id}";
                 generateItems.Add(newItem);
 
-                string htmlTemplate = @$"
+                var sourceRegion = item.Source.Length == 0 ? "" :
+                                  $@"<tr>
+										<td>{item.Source[0]}：</td>
+										<td>{item.Source[1]}</td>
+									</tr>
+";
+                var postureRegion = item.Posture.Length == 0 ? "" :
+                                  $@"<tr>
+										<td>{item.Posture[0]}：</td>
+										<td>{item.Posture[1]}</td>
+									</tr>
+";
+                var rangeRegion = item.Range.Length == 0 ? "" :
+                                  $@"<tr>
+										<td>{item.Range[0]}：</td>
+										<td>{item.Range[1]}</td>
+									</tr>
+";
+                var savingThrowsRegion = item.SavingThrows.Length == 0 ? "" :
+                                  $@"<tr>
+										<td>{item.SavingThrows[0]}：</td>
+										<td>{item.SavingThrows[1]}</td>
+									</tr>
+";
+                var durationRegion = item.Duration.Length == 0 ? "" :
+                                  $@"<tr>
+										<td>{item.Duration[0]}：</td>
+										<td>{item.Duration[1]}</td>
+									</tr>
+";
+                var ambitRegion = item.Ambit.Length == 0 ? "" :
+                                  $@"<tr>
+										<td>{item.Ambit[0]}：</td>
+										<td>{item.Ambit[1]}</td>
+									</tr>
+";
+                var bootRegion = item.SpellBoots.Length == 0 ? "" :
+                                  $@"<!-- 增強 -->
+					                 <section>
+					                 	<h4>升階說明：</h4>
+					                 	<blockquote>
+					                 		{item.SpellBoots}
+					                 	</blockquote>
+					                 </section>
+";
+
+                string htmlTemplate = 
+                    @$"
                 <article id='{newItem.HtmlId}'>
 					<section>
 						<h6 class='icon solid fa-hourglass-start'>{item.SpellClassName}-{item.SpellLevelName}</h6>
@@ -163,7 +210,7 @@ namespace PathfinderCrawlerWebSite.Service.Implement
 							</div>
 							<div class='field'>
 								<ul>
-									<li>{string.Join("", item.Feature)}</li>
+									<li>{string.Join(" ", item.Feature)}</li>
 								</ul>
 							</div>
 						</div>
@@ -173,30 +220,12 @@ namespace PathfinderCrawlerWebSite.Service.Implement
 						<div class='table-wrapper'>
 							<table class='alt'>
 								<tbody>
-									<tr>
-										<td>根源：</td>
-										<td>{string.Join(", ", item.Source)}</td>
-									</tr>
-									<tr>
-										<td>施放</td>
-										<td>{string.Join(", ", item.Posture)}</td>
-									</tr>
-									<tr>
-										<td>射程</td>
-										<td>{string.Join(", ", item.Range)}</td>
-									</tr>
-									<tr>
-										<td>豁免</td>
-										<td>{string.Join(", ", item.SavingThrows)}</td>
-									</tr>
-									<tr>
-										<td>持續時間</td>
-										<td>{string.Join(", ", item.Duration)}</td>
-									</tr>
-									<tr>
-										<td>區域</td>
-										<td>{string.Join(", ", item.Range)}</td>
-									</tr>
+									{sourceRegion}
+									{postureRegion}
+									{rangeRegion}
+									{savingThrowsRegion}
+									{durationRegion}
+									{ambitRegion}
 								</tbody>
 							</table>
 						</div>
@@ -208,16 +237,8 @@ namespace PathfinderCrawlerWebSite.Service.Implement
 							{item.Explain}
 						</blockquote>
 					</section>
-					<!-- 增強 -->
-					<section>
-						<h4>升階說明：</h4>
-						<blockquote>
-							{item.SpellBoots}
-						</blockquote>
-					</section>
+					{bootRegion}
                 </article>
-
-
 ";
                 htmlResult.Add(htmlTemplate);
             }
