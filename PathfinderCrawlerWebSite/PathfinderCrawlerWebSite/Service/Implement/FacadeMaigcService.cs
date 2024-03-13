@@ -191,7 +191,7 @@ namespace PathfinderCrawlerWebSite.Service.Implement
 						<ul class='actions'>
 							<li><a href='#' class='button icon solid fas fa-chevron-left'></a></li>
 							<li>
-								<select name='spellitem-category' id='spellitem-category'>
+								<select id='spellitem-category-{newItem.HtmlId}'>
 									<option value='0'></option>									
 								</select>
 							</li>

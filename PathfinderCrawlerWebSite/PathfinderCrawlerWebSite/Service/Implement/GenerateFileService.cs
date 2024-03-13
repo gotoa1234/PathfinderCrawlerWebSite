@@ -9,7 +9,9 @@ namespace PathfinderCrawlerWebSite.Service.Implement
     public class GenerateFileService : IGenerateFileService
     {
         private readonly string frontWebSaveFilePath = $@"{Directory.GetParent(Directory.GetCurrentDirectory()).FullName}\PF2EWebSiteFrontend\WebSite\assets\extend\Jsonfile\";
+        private readonly string frontWebSaveHtmlFilePath = $@"{Directory.GetParent(Directory.GetCurrentDirectory()).FullName}\PF2EWebSiteFrontend\WebSite\";
         private readonly string backWebSaveFilePath = $@".\wwwroot\extend\Jsonfile\";
+        private readonly string backWebSaveHtmlFilePath = $@".\wwwroot\extend\htmlfile\";
         private readonly IFacadeMaigcService _facadeMaigcService;
 
         public GenerateFileService(IFacadeMaigcService facadeMaigcService)
@@ -46,8 +48,8 @@ namespace PathfinderCrawlerWebSite.Service.Implement
         /// <param name="htmlString"></param>
         private void GeneratorHtmlTemplate(string htmlString)
         {
-            var frontWebFileNamePath = $@"{frontWebSaveFilePath}spellHtml.html";
-            var backWebFileNamePath = $@"{backWebSaveFilePath}spellHtml.html"; ;
+            var frontWebFileNamePath = $@"{frontWebSaveHtmlFilePath}spellHtml.html";
+            var backWebFileNamePath = $@"{backWebSaveHtmlFilePath}spellHtml.html"; ;
             SaveFile(frontWebFileNamePath, backWebFileNamePath, htmlString);
         }
 

@@ -143,20 +143,6 @@ async function fetchDataAndStoreInIndexedDB() {
 
                     // 更新數據庫結構
                     var objectStore = db.createObjectStore(config.storeName, { autoIncrement: true });
-                    //objectStore.createIndex('SpellClass', 'SpellClass', { unique: false });
-                    //objectStore.createIndex('SpellLevel', 'SpellLevel', { unique: false });
-                    //objectStore.createIndex('SourceDataUrl', 'SourceDataUrl', { unique: false });
-                    //objectStore.createIndex('Name', 'Name', { unique: false });
-                    //objectStore.createIndex('Level', 'Level', { unique: false });
-                    //objectStore.createIndex('Feature', 'Feature', { unique: false, multiEntry: true });
-                    //objectStore.createIndex('Source', 'Source', { unique: false, multiEntry: true });
-                    //objectStore.createIndex('Posture', 'Posture', { unique: false, multiEntry: true });
-                    //objectStore.createIndex('Range', 'Range', { unique: false, multiEntry: true });
-                    //objectStore.createIndex('SavingThrows', 'SavingThrows', { unique: false, multiEntry: true });
-                    //objectStore.createIndex('Ambit', 'Ambit', { unique: false, multiEntry: true });
-                    //objectStore.createIndex('Duration', 'Duration', { unique: false, multiEntry: true });
-                    //objectStore.createIndex('Explain', 'Explain', { unique: false });
-                    //objectStore.createIndex('SpellBoots', 'SpellBoots', { unique: false });
                     objectStore.createIndex('Name_SpellLevel_SpellClass', ["Name", "SpellLevel", "SpellClass"], { unique: false });
                     objectStore.createIndex('SpellLevel_SpellClass', ["SpellLevel", "SpellClass"], { unique: false });
                 };
@@ -233,7 +219,7 @@ async function getDb_Name_Level_SpellClass_Data(searchSpellLevel, searchSpellCla
                     // 開始交易
                     var transaction = db.transaction([config.storeName], 'readwrite');
                     var objectStore = transaction.objectStore(config.storeName);
-                    debugger;
+                    
                     // 查詢資料（使用索引）
                     var index = objectStore.index("Name_SpellLevel_SpellClass");
                     var request2 = index.openCursor();
@@ -264,7 +250,7 @@ async function getDb_Name_Level_SpellClass_Data(searchSpellLevel, searchSpellCla
 }
 
 //實現查詢IndexedDB 內的索引資料
-async function getDb_Name_Level_SpellClass_Data(searchSpellLevel, searchSpellClass) {
+async function getDb_Level_SpellClass_Data(searchSpellLevel, searchSpellClass) {
     var config = await getFunctionProperties();
 
     return new Promise(function (resolve, reject) {
@@ -286,10 +272,12 @@ async function getDb_Name_Level_SpellClass_Data(searchSpellLevel, searchSpellCla
                     // 開始交易
                     var transaction = db.transaction([config.storeName], 'readwrite');
                     var objectStore = transaction.objectStore(config.storeName);
-                    debugger;
+                    
                     // 查詢資料（使用索引）
                     var index = objectStore.index("SpellLevel_SpellClass");
                     var request2 = index.openCursor();
+
+                    var foundEntries = []; // 收集符合條件的字串
 
                     request2.onsuccess = function (event) {
                         var cursor = event.target.result;
@@ -297,15 +285,13 @@ async function getDb_Name_Level_SpellClass_Data(searchSpellLevel, searchSpellCla
                             var value = cursor.value;
                             if (value.SpellLevel === searchSpellLevel &&
                                 value.SpellClass === searchSpellClass ) {
-                                console.log("Found:", value);
+                                foundEntries.push(value);
                             }
                             cursor.continue();
                         } else {
-                            console.log("No more entries!");
+                            resolve(foundEntries);
                         }
                     };
-                    // 所有操作完成後，解析 Promise
-                    resolve("fetchDataAndStoreInIndexedDB completed successfully");
                 };
             })
             .catch(function (error) {
