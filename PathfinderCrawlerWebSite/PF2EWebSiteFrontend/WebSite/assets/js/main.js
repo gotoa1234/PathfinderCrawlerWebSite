@@ -296,6 +296,7 @@
 						.appendTo($this)
 						.on('click', function() {
 							location.hash = '';
+							OpenHomeBg();
 						});
 
 				// Prevent clicks from inside article from bubbling.

@@ -187,7 +187,7 @@ namespace PathfinderCrawlerWebSite.Service.Implement
                     @$"
                 <article id='{newItem.HtmlId}'>
 					<section>
-						<h6 class='icon solid fa-hourglass-start'>{item.SpellClassName}-{item.SpellLevelName}</h6>
+						<h3 class='icon solid fa-hourglass-start'>{item.SpellClassName}-{item.SpellLevelName}</h3>
 						<ul class='actions'>
 							<li><a href='#' class='button icon solid fas fa-chevron-left'></a></li>
 							<li>
@@ -205,9 +205,6 @@ namespace PathfinderCrawlerWebSite.Service.Implement
 					<hr>
 					<section>
 						<div class='fields'>
-							<div class='field'>
-								<h2>環級：{item.SpellLevelName}</h2>
-							</div>
 							<div class='field'>
 								<ul>
 									<li>{string.Join(" ", item.Feature)}</li>
