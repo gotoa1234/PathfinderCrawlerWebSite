@@ -12,10 +12,10 @@
 	<link rel="stylesheet" href="assets/css/main.css" />
 	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
-<!-- 1. 缺少姿勢的動作圖片 (爬蟲階段)-->
+
 <body class="is-preload">
 	<div id="page-mask" style="display:none">
-		<img src="assets/extend/images/blockui_wizard.gif" alt="遮罩的圖片" id="page-mask-image">
+		<img src="assets/extend/images/blockui_wizard.gif" alt="遮罩的圖片" id="page-mask-image">		
 	</div>
 	<div id="home-page-bg" style="display: none">
 		<img src="assets/extend/images/blockui_wizard.gif" alt="遮罩的圖片" id="home-page-image">
@@ -99239,67 +99239,61 @@
 	<script src="assets/js/browser.min.js"></script>
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
-	<!-- avro-web CDN -->
-	<script src="https://cdn.jsdelivr.net/npm/avro-web@1.0.3/avro.min.js"></script>
+	<script src="assets/js/main.js"></script>	
 	<!-- Extend Script-->
 	<script src="assets/extend/js/customblockui.js"></script>
+	<script src="assets/extend/js/sessionStorageUtil.js"></script>
 	<script src="assets/extend/js/indexedDBUtil.js"></script>
 	<script>
-		indexedDBUtilInitinalize();
-		/*var getResult = getDbData();*/
-	</script>
+		indexedDBUtilInitinalize();		
+	</script>	
 
-	<!-- 錨點 -->
-	<script>
-		var globalCurrentArticleId = '';
-		var globalRecords = [];
+	<script>			
 		var isDropdownListChanging = false;
-
-		// 搜尋頁
-		document.addEventListener('DOMContentLoaded', function () {
-			var form = document.getElementById('search-form');
-			form.addEventListener('submit', function (event) {
-				// 停止 Submit event
-				event.preventDefault();
-
-				// 找出使用者搜尋的結果
-				var searchKeyword = document.getElementById('search-keyword').value;
-				var spellLevel = document.getElementById('spelllevel-category').value;
-				var spellClass = document.querySelector('input[name="spellclass"]:checked').value;
-
-				// 找出所有相關的資料 IndexedDB
-				var resultPromise;
-				if (searchKeyword === '')
-					resultPromise = getDb_Level_SpellClass_Data(spellLevel, spellClass);
-				else
-					resultPromise = getDb_Name_Level_SpellClass_Data(spellLevel, spellClass, searchKeyword);
-
-				// 使用 .then() 處理 Promise 返回的結果
-				resultPromise.then(function (result) {
-					//無資料中斷
-					if (result.length === 0) {
-						alert('查無資料');
-						return;
-					}
-					// 第一筆當開始
-					globalRecords = result;
-					globalCurrentArticleId = result[0].HtmlId;
-
-					// 配置當前的 Article
-					MiddleArticleDropdownList();
-
-					// 跳轉
-					CloseHomeBg();
-					window.location.href = window.location.pathname + '#' + globalCurrentArticleId;
-				}).catch(function (error) {
-					alert('查無資料');
-				});
-			});
-		});
 
 		// 基本跳轉攜帶參數測試
 		document.addEventListener('DOMContentLoaded', function () {
+
+			// 0. 初始化Search Form
+            var form = document.getElementById('search-form');
+            form.addEventListener('submit', function (event) {
+                // 停止 Submit event
+                event.preventDefault();
+
+                // 找出使用者搜尋的結果
+                var searchKeyword = document.getElementById('search-keyword').value;
+                var spellLevel = document.getElementById('spelllevel-category').value;
+                var spellClass = document.querySelector('input[name="spellclass"]:checked').value;
+
+                // 找出所有相關的資料 IndexedDB
+                var resultPromise;
+                if (searchKeyword === '')
+                    resultPromise = getDb_Level_SpellClass_Data(spellLevel, spellClass);
+                else
+                    resultPromise = getDb_Name_Level_SpellClass_Data(spellLevel, spellClass, searchKeyword);
+
+                // 使用 .then() 處理 Promise 返回的結果
+                resultPromise.then(function (result) {
+                    //無資料中斷
+                    if (result.length === 0) {
+                        alert('查無資料');
+                        return;
+                    }
+                    // 紀錄當前ID , 當前搜尋結果					
+                    saveToSessionStorage('globalRecords', result);
+                    saveToSessionStorage('globalCurrentArticleId', result[0].HtmlId);
+
+                    // 配置當前的 Article
+                    MiddleArticleDropdownList();
+
+                    // 跳轉
+                    CloseHomeBg();
+                    window.location.href = window.location.pathname + '#' + result[0].HtmlId;
+                }).catch(function (error) {
+                    alert('查無資料');
+                });
+            });
+
 			var ulElement = document.getElementById('links-list');
 			// 1. 首頁4個連接元素配置，並且阻止點擊事件
 			var links = ulElement.querySelectorAll('li a');
@@ -99339,22 +99333,35 @@
 
 			// 3. 載入頁面完成，才將背景圖渲染
 			OpenHomeBg();
+
+			// 4. 避免F5 或重新整理，畫面異常，檢查是否再查詢頁面
+            var globalCurrentArticleId = getFromSessionStorage('globalCurrentArticleId');
+            var globalRecords = getFromSessionStorage('globalRecords');
+			if (globalCurrentArticleId != '' &&
+				globalRecords.length > 0)
+			{
+				MiddleArticleDropdownList();
+			}
 		});
 
 		function NextArticle() {
+			var globalCurrentArticleId = getFromSessionStorage('globalCurrentArticleId');
+            var globalRecords = getFromSessionStorage('globalRecords');
 			var nextPosition = globalRecords.findIndex(function (record) {
 				return record.HtmlId === globalCurrentArticleId;
 			}) + 1;
 			if (nextPosition >= globalRecords.length) {
 				alert('已經是最後一頁');
 				return;
-			}
-			globalCurrentArticleId = globalRecords[nextPosition].HtmlId;
+			}			
+            saveToSessionStorage('globalCurrentArticleId', globalRecords[nextPosition].HtmlId);
 			MiddleArticleDropdownList();
-			window.location.href = window.location.pathname + '#' + globalCurrentArticleId;
+            window.location.href = window.location.pathname + '#' + globalRecords[nextPosition].HtmlId;
 		}
 
 		function LastArticle() {
+			var globalCurrentArticleId = getFromSessionStorage('globalCurrentArticleId');
+            var globalRecords = getFromSessionStorage('globalRecords');
 			var lastPosition = globalRecords.findIndex(function (record) {
 				return record.HtmlId === globalCurrentArticleId;
 			}) - 1;
@@ -99362,14 +99369,17 @@
 				alert('已經是第一頁');
 				return;
 			}
-			globalCurrentArticleId = globalRecords[lastPosition].HtmlId;
+            saveToSessionStorage('globalCurrentArticleId', globalRecords[lastPosition].HtmlId);
 			MiddleArticleDropdownList();
-			window.location.href = window.location.pathname + '#' + globalCurrentArticleId;
+            window.location.href = window.location.pathname + '#' + globalRecords[lastPosition].HtmlId;
 		}
 
 		function MiddleArticleDropdownList() {
 			if (!isDropdownListChanging) {
 				isDropdownListChanging = true;
+				var globalCurrentArticleId = getFromSessionStorage('globalCurrentArticleId');
+				var globalRecords = getFromSessionStorage('globalRecords');
+
 				// 找出指定的articale Option
 				var targetElement = document.getElementById('spellitem-category-' + globalCurrentArticleId);
 				targetElement.innerHTML = '';
@@ -99392,16 +99402,14 @@
 						return;
 
 					// 用戶選擇不同的項目進行跳轉
-					globalCurrentArticleId = newTargetArticleId;
+                    saveToSessionStorage('globalCurrentArticleId', newTargetArticleId);					
 					MiddleArticleDropdownList();
-					window.location.href = window.location.pathname + '#' + globalCurrentArticleId;
+                    window.location.href = window.location.pathname + '#' + newTargetArticleId;
 				});
 				isDropdownListChanging = false;
 			}
 		}
 
 	</script>
-
-
 </body>
 </html>

@@ -156,7 +156,7 @@ namespace PathfinderCrawlerWebSite.Models.Magic
                     if (thNode != null && tdNode != null)
                     {
                         string thText = thNode.InnerText.Trim();
-                        string tdText = tdNode.InnerText.Trim();
+                        string tdText = tdNode.OuterHtml.Trim();
 
                         switch (thText)
                         {
