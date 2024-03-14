@@ -8,3 +8,8 @@ function getFromSessionStorage(key) {
     const storedValue = sessionStorage.getItem(key);
     return storedValue ? JSON.parse(storedValue) : null;
 }
+
+// 從 Session Storage 刪除指定資料
+function deleteFromSessionStorage(key) {
+    sessionStorage.removeItem(key);    
+}
