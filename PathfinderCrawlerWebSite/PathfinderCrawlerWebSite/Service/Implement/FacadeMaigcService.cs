@@ -187,15 +187,25 @@ namespace PathfinderCrawlerWebSite.Service.Implement
                     @$"
                 <article id='{newItem.HtmlId}'>
 					<section>
-						<h3 class='icon solid fa-hourglass-start'>{item.SpellClassName}-{item.SpellLevelName}</h3>
+                        <form method='post' action='#'>
+                             <div class='fields'>
+                                  <div class='field half'>
+                                       <h3 class='icon solid fa-hourglass-start'> {item.SpellClassName}-{item.SpellLevelName}</h3>
+                                  </div>
+                                  <div class='field half'>
+                                       <input type='checkbox' id='CheckBox_{newItem.HtmlId}' name='Lable_{newItem.HtmlId}'>
+                                       <label for='CheckBox_{newItem.HtmlId}'>加入法術書</label>
+                                  </div>
+                             </div>
+                        </form>						
 						<ul class='actions'>
-							<li><a href='#' class='button icon solid fas fa-chevron-left'></a></li>
+							<li><a href='#' class='button icon solid fas fa-chevron-left'>上頁</a></li>
 							<li>
 								<select id='spellitem-category-{newItem.HtmlId}'>
 									<option value='0'></option>									
 								</select>
 							</li>
-							<li><a href='#' class='button icon solid fas fa-chevron-right'></a></li>
+							<li><a href='#' class='button icon solid fas fa-chevron-right'>下頁</a></li>
 						</ul>
 					</section>
 					<hr>
