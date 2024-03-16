@@ -194,7 +194,7 @@ namespace PathfinderCrawlerWebSite.Service.Implement
                                   </div>
                                   <div class='field half'>
                                        <input type='checkbox' id='CheckBox_{newItem.HtmlId}' name='Lable_{newItem.HtmlId}'>
-                                       <label for='CheckBox_{newItem.HtmlId}'>加入法術書</label>
+                                       <label for='CheckBox_{newItem.HtmlId}'>加入 <a href='#MySpellBooks' value=''>我的法術書</a></label>
                                   </div>
                              </div>
                         </form>						
