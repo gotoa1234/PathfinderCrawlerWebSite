@@ -32,9 +32,8 @@ async function indexedDBUtilInitinalize() {
 
 //設定檔
 async function getFunctionProperties() {
-    const fileVersion = await getVersionFile();
     return {
-        fileVersion: fileVersion,
+        fileVersion: 1,
         dbName: 'pathfinderShareNote-database',
         storeName: 'magicStore'
     };
@@ -54,21 +53,6 @@ async function getSpellModelFile() {
             var jsonObject = JSON.parse(jsonString);
             // 返回資料
             resolve(jsonObject);
-        };
-        xhr.send();
-    });
-}
-
-async function getVersionFile() {
-    return new Promise(function (resolve, reject) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'assets/extend/jsonfile/Version.json', true);
-        xhr.responseType = 'arraybuffer';
-        xhr.onload = function () {
-            var uint8Array = new Uint8Array(this.response);
-            var jsonString = new TextDecoder().decode(uint8Array);
-            var jsonObject = JSON.parse(jsonString);
-            resolve(jsonObject.Version);
         };
         xhr.send();
     });

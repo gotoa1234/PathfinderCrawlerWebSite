@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using HtmlAgilityPack;
+using Newtonsoft.Json;
+using NUglify;
 using PathfinderCrawlerWebSite.IService;
 using PathfinderCrawlerWebSite.Models;
 using PathfinderCrawlerWebSite.Models.Magic;
@@ -48,9 +50,22 @@ namespace PathfinderCrawlerWebSite.Service.Implement
         /// <param name="htmlString"></param>
         private void GeneratorHtmlTemplate(string htmlString)
         {
+            // 原版
             var frontWebFileNamePath = $@"{frontWebSaveHtmlFilePath}spellHtml.html";
             var backWebFileNamePath = $@"{backWebSaveHtmlFilePath}spellHtml.html"; ;
             SaveFile(frontWebFileNamePath, backWebFileNamePath, htmlString);
+
+            // Minify 版本
+            frontWebFileNamePath = $@"{frontWebSaveHtmlFilePath}minifySpellHtml.html";
+            backWebFileNamePath = $@"{backWebSaveHtmlFilePath}minifySpellHtml.html"; ;
+            SaveFile(frontWebFileNamePath, backWebFileNamePath, MinifyHtml(htmlString));
+
+            //精簡化代碼
+            string MinifyHtml(string html)
+            {
+                var resultMinify = Uglify.Html(html).Code;
+                return resultMinify;
+            }
         }
 
         /// <summary>
@@ -84,7 +99,7 @@ namespace PathfinderCrawlerWebSite.Service.Implement
             // 序列化結果
             var jsonString = JsonConvert.SerializeObject(newVersion);
 
-            SaveFile(frontWebFileNamePath, backWebFileNamePath, jsonString);
+            //SaveFile(frontWebFileNamePath, backWebFileNamePath, jsonString);
         }
 
         /// <summary>

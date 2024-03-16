@@ -47,7 +47,7 @@ namespace PathfinderCrawlerWebSite.Service.Implement
                 throw new Exception(ex.Message);
             }
             // 2. 整理資料
-            var getResult =CreateData(collections);
+            var getResult = CreateData(collections);
             return (getResult.htmlString, getResult.indexedDBJson);
         }
 
