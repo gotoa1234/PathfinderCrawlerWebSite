@@ -201,7 +201,7 @@ namespace PathfinderCrawlerWebSite.Service.Implement
 						<ul class='actions'>
 							<li><a href='#' class='button icon solid fas fa-chevron-left'>上頁</a></li>
 							<li>
-								<select id='spellitem-category-{newItem.HtmlId}'>
+								<select class='align-center' id='spellitem-category-{newItem.HtmlId}'>
 									<option value='0'></option>									
 								</select>
 							</li>
