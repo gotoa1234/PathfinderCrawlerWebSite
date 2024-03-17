@@ -190,7 +190,7 @@ namespace PathfinderCrawlerWebSite.Service.Implement
                         <form method='post' action='#'>
                              <div class='fields'>
                                   <div class='field half'>
-                                       <h3 class='icon solid fa-hourglass-start'> {item.SpellClassName}-{item.SpellLevelName}</h3>
+                                       <h3 class='icon solid fa-hourglass-start'><a href='#search'> {item.SpellClassName}-{item.SpellLevelName}</a></h3>
                                   </div>
                                   <div class='field half'>
                                        <input type='checkbox' id='CheckBox_{newItem.HtmlId}' name='Lable_{newItem.HtmlId}'>
